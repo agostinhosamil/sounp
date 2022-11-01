@@ -8,8 +8,8 @@ import { setSelectedMusic, unsetSelectedMusic } from '@reducers/selectedMusic'
 
 import { AudioPlayer } from '@components/AudioPlayer'
 
-import { MusicSiblings } from './_MusicSiblings'
-import { MusicContributors } from './_MusicContributors'
+import { MusicSiblings } from '@components/MusicSiblings'
+import { MusicContributors } from '@components/MusicContributors'
 
 import {
   MusicDetailsContainer,
@@ -24,9 +24,8 @@ import {
   LyricContainer,
   LyricTitle,
   LyricParagraphGroup,
-  LyricParagraph,
-  EmbedVideoContainer
-} from './_styles'
+  LyricParagraph
+} from '@styles/musicStyles'
 
 export default function Music ({ album, artist, trackList, ...music }) {
   // const playingMusicAudioContext = useSelector(state => state.playingMusic.audioContext)
