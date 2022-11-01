@@ -48,17 +48,10 @@ export function HeaderMenu ({ children }) {
     const pageScrollHandler = (event) => {
       const containerY = containerRef.current.offsetHeight + elementOffsetY(containerRef.current)
 
-      // console.log("Y => ", containerY, ' > ', window.scrollY)
       if (window.scrollY >= containerY) {
-        if (!fixed) {
-          console.log('Fix Header Menu ', Math.random())
-          setFixed(true)
-        }
+        !fixed && setFixed(true)
       } else {
-        if (fixed) {
-          console.log('Unfix Header Menu ', Math.random())
-          setFixed(false)
-        }
+        fixed && setFixed(false)
       }
     }
 
@@ -91,8 +84,14 @@ export function HeaderMenu ({ children }) {
 
   const HeaderMenuContainerWrapper = fixed ? FixedHeaderMenuElement : Fragment
 
+  const containerWrapperProps = {}
+
+  if (!!fixed) {
+    containerWrapperProps.containerRef = containerRef
+  }
+
   return (
-    <HeaderMenuContainerWrapper containerRef={containerRef}>
+    <HeaderMenuContainerWrapper {...containerWrapperProps}>
       <HeaderMenuContainer ref={containerRef}>
         <HeaderLogoContainer>
           <span>DeezerAPI</span>
