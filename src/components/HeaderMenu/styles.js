@@ -82,6 +82,10 @@ export const HeaderMenuWrapper = styled.ul`
   list-style: none;
   padding-left: 7px;
   white-space: nowrap;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `
 
 export const HeaderMenuItemLink = styled.li`
@@ -168,4 +172,25 @@ export const HeaderSearchBoxResultSubTitle = styled.i`
   white-space: nowrap;
   color: #707070;
   text-transform: uppercase;
+`
+
+export const HeaderMenuButtonContainer = styled.button.attrs({
+  type: 'button'
+})`
+  background-color: transparent;
+  outline: 0px;
+  border: 0px;
+  font-size: 30px;
+  margin: 6px 0px 0px 5px;
+  cursor: pointer;
+  width: 42px;
+  height: 39px;
+
+  &:hover {
+    color: #ff6366;
+  }
+
+  &:active {
+    color: #bd5456;
+  }
 `

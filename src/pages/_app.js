@@ -10,7 +10,8 @@ import { GlobalStyles } from '@styles'
 import { Header } from '@components/Header'
 import { HeaderCover } from '@components/HeaderCover'
 import { AppWrapper } from '~/components/AppWrapper'
-import { HeaderMenu, HeaderMenuItem } from '@components/HeaderMenu'
+import { HeaderMenu } from '@components/HeaderMenu'
+import { HeaderMenuItem } from '@components/HeaderMenu/HeaderMenuItem'
 
 import store from '~/config/state/store'
 

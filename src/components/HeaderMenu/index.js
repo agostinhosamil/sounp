@@ -1,8 +1,9 @@
 import { Fragment, useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
 import * as Icon from 'react-icons/sl'
 
 import { HeaderSearchBoxResultPreview } from './HeaderSearchBoxResultPreview'
+import { FixedHeaderMenuElement } from './FixedHeaderMenuElement'
+import { HeaderMenuButton } from './HeaderMenuButton'
 
 import { elementOffsetY } from '@utils/helper'
 
@@ -13,27 +14,8 @@ import {
   HeaderMenuWrapper,
   IconContainer,
   HeaderSearchBox,
-  HeaderSearchBoxInput,
-  HeaderMenuItemLink,
-  FixedHeaderMenu
+  HeaderSearchBoxInput
 } from './styles'
-
-function FixedHeaderMenuElement ({ children, containerRef }) {
-  const divRef = useRef()
-
-  useEffect(() => {
-    divRef.current.style.height = `${containerRef.current.offsetHeight}px`
-  })
-
-  return (
-    <Fragment>
-      <div ref={divRef} style={{ width: '100%' }} />
-      <FixedHeaderMenu>
-        {children}
-      </FixedHeaderMenu>
-    </Fragment>
-  )
-}
 
 // import DeezerLogo from './deezer_logo.svg'
 
@@ -41,11 +23,12 @@ export function HeaderMenu ({ children }) {
   const [query, setQuery] = useState('')
   const [showPreview, setShowPreview] = useState(false)
   const [fixed, setFixed] = useState(false)
+  const [hideMenuItems, setHideMenuItems] = useState(false)
   const containerRef = useRef()
   const inputRef = useRef()
 
   useEffect(() => {
-    const pageScrollHandler = (event) => {
+    const pageScrollHandler = () => {
       const containerY = containerRef.current.offsetHeight + elementOffsetY(containerRef.current)
 
       if (window.scrollY >= containerY) {
@@ -55,14 +38,26 @@ export function HeaderMenu ({ children }) {
       }
     }
 
+    const pageResizeHandler = () => {
+      if (window.innerWidth > 800) {
+        hideMenuItems && setHideMenuItems(false)
+      } else {
+        !hideMenuItems && setHideMenuItems(true)
+      }
+    }
+
+    pageResizeHandler()
+
     if (showPreview) {
-      inputRef.current.focus()
+      inputRef.current?.focus()
     }
 
     window.addEventListener('scroll', pageScrollHandler, true)
+    window.addEventListener('resize', pageResizeHandler, true)
 
     return () => {
       window.removeEventListener('scroll', pageScrollHandler, true)
+      window.removeEventListener('resize', pageResizeHandler, true)
     }
   })
 
@@ -83,6 +78,7 @@ export function HeaderMenu ({ children }) {
   }
 
   const HeaderMenuContainerWrapper = fixed ? FixedHeaderMenuElement : Fragment
+  const HeaderMenuWrapperElement = hideMenuItems ? HeaderMenuButton : HeaderMenuWrapper
 
   const containerWrapperProps = {}
 
@@ -115,28 +111,10 @@ export function HeaderMenu ({ children }) {
           )}
 
         </HeaderSearchBoxContainer>
-        <HeaderMenuWrapper>
+        <HeaderMenuWrapperElement>
           {children}
-        </HeaderMenuWrapper>
+        </HeaderMenuWrapperElement>
       </HeaderMenuContainer>
     </HeaderMenuContainerWrapper>
-  )
-}
-
-export function HeaderMenuItem ({ label, icon, href }) {
-  const HeaderMenuIcon = Icon[icon] || Fragment
-
-  return (
-    <HeaderMenuItemLink>
-      <Link href={href || '/'}>
-        <a>
-          <HeaderMenuIcon />
-
-          <span>
-            { label }
-          </span>
-        </a>
-      </Link>
-    </HeaderMenuItemLink>
   )
 }

@@ -19,9 +19,16 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  h1, h2, h3, h4 {
+  ul, ol, dd, dl, h1, h2, h3, h4 {
     margin: 0px;
     padding: 0px;
+  }
+
+  svg, image-orientation, canvas {
+    pointer-events: none;
+    cursor: none;
+    user-select: none;
+    -webkit-user-select: none;
   }
 `
 
