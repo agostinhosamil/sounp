@@ -1,5 +1,5 @@
-import { Fragment } from 'react'
-
+// import { Fragment } from 'react'
+import Link from 'next/link'
 import Skeleton from 'react-loading-skeleton'
 
 import { 
@@ -14,7 +14,7 @@ import {
   Data
 } from './styles'
 
-export function MusicCard ({ title, artist, album, loading }) {
+export function MusicCard ({ title, artist, album, loading, id }) {
   return (
     <Container>
       <Wrapper>
@@ -25,15 +25,17 @@ export function MusicCard ({ title, artist, album, loading }) {
           </AlbumCoverImageWrapper>
         </AlbumCoverImage>
         <Data>
-          <Fragment>
-            {!loading && <Title>{title}</Title> || (
-              <TitleSkeleton>
-                <Skeleton />
-              </TitleSkeleton>
-            )}
-            
-            {!loading && <ArtistName>{artist?.name}</ArtistName> || <Skeleton count={4} />}
-          </Fragment>
+          <Link href={['/musics', id].join('/')}>
+            <a>
+              {!loading && <Title>{title}</Title> || (
+                <TitleSkeleton>
+                  <Skeleton />
+                </TitleSkeleton>
+              )}
+              
+              {!loading && <ArtistName>{artist?.name}</ArtistName> || <Skeleton count={4} />}
+            </a>
+          </Link>
         </Data>
       </Wrapper>
     </Container>

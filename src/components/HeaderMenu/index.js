@@ -1,8 +1,10 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import * as Icon from 'react-icons/sl'
 
 import { HeaderSearchBoxResultPreview } from './HeaderSearchBoxResultPreview'
+
+import { elementOffsetY } from '@utils/helper'
 
 import {
   HeaderMenuContainer,
@@ -12,14 +14,64 @@ import {
   IconContainer,
   HeaderSearchBox,
   HeaderSearchBoxInput,
-  HeaderMenuItemLink
+  HeaderMenuItemLink,
+  FixedHeaderMenu
 } from './styles'
+
+function FixedHeaderMenuElement ({ children, containerRef }) {
+  const divRef = useRef()
+
+  useEffect(() => {
+    divRef.current.style.height = `${containerRef.current.offsetHeight}px`
+  })
+
+  return (
+    <Fragment>
+      <div ref={divRef} style={{ width: '100%' }} />
+      <FixedHeaderMenu>
+        {children}
+      </FixedHeaderMenu>
+    </Fragment>
+  )
+}
 
 // import DeezerLogo from './deezer_logo.svg'
 
 export function HeaderMenu ({ children }) {
   const [query, setQuery] = useState('')
   const [showPreview, setShowPreview] = useState(false)
+  const [fixed, setFixed] = useState(false)
+  const containerRef = useRef()
+  const inputRef = useRef()
+
+  useEffect(() => {
+    const pageScrollHandler = (event) => {
+      const containerY = containerRef.current.offsetHeight + elementOffsetY(containerRef.current)
+
+      // console.log("Y => ", containerY, ' > ', window.scrollY)
+      if (window.scrollY >= containerY) {
+        if (!fixed) {
+          console.log('Fix Header Menu ', Math.random())
+          setFixed(true)
+        }
+      } else {
+        if (fixed) {
+          console.log('Unfix Header Menu ', Math.random())
+          setFixed(false)
+        }
+      }
+    }
+
+    if (showPreview) {
+      inputRef.current.focus()
+    }
+
+    window.addEventListener('scroll', pageScrollHandler, true)
+
+    return () => {
+      window.removeEventListener('scroll', pageScrollHandler, true)
+    }
+  })
 
   function searchBoxInputChangeHandler ({ target, ...event }) {
     setQuery(target.value)
@@ -33,37 +85,42 @@ export function HeaderMenu ({ children }) {
     setShowPreview(true)
   }
 
-
   function validQuery (query) {
     return Boolean(query && /\S/.test(query))
   }
 
-  return (
-    <HeaderMenuContainer>
-      <HeaderLogoContainer>
-        <span>DeezerAPI</span>
-      </HeaderLogoContainer>
-      <HeaderSearchBoxContainer>
-        <IconContainer>
-          <Icon.SlMagnifier />
-        </IconContainer>
-        <HeaderSearchBox>
-          <HeaderSearchBoxInput
-            onChange={searchBoxInputChangeHandler}
-            onBlur={searchBoxInputBlurHandler}
-            onFocus={searchBoxInputFocusHandler}
-            />
-        </HeaderSearchBox>
-        
-        {validQuery(query) && showPreview && (
-          <HeaderSearchBoxResultPreview query={query} />
-        )}
+  const HeaderMenuContainerWrapper = fixed ? FixedHeaderMenuElement : Fragment
 
-      </HeaderSearchBoxContainer>
-      <HeaderMenuWrapper>
-        {children}
-      </HeaderMenuWrapper>
-    </HeaderMenuContainer>
+  return (
+    <HeaderMenuContainerWrapper containerRef={containerRef}>
+      <HeaderMenuContainer ref={containerRef}>
+        <HeaderLogoContainer>
+          <span>DeezerAPI</span>
+        </HeaderLogoContainer>
+        <HeaderSearchBoxContainer>
+          <IconContainer>
+            <Icon.SlMagnifier />
+          </IconContainer>
+          <HeaderSearchBox>
+            <HeaderSearchBoxInput
+              onChange={searchBoxInputChangeHandler}
+              onBlur={searchBoxInputBlurHandler}
+              onFocus={searchBoxInputFocusHandler}
+              defaultValue={query}
+              ref={inputRef}
+              />
+          </HeaderSearchBox>
+          
+          {validQuery(query) && showPreview && (
+            <HeaderSearchBoxResultPreview query={query} />
+          )}
+
+        </HeaderSearchBoxContainer>
+        <HeaderMenuWrapper>
+          {children}
+        </HeaderMenuWrapper>
+      </HeaderMenuContainer>
+    </HeaderMenuContainerWrapper>
   )
 }
 

@@ -54,12 +54,7 @@ export const ArtistName = styled.span`
   font-size: 18px;
   color: #34669b;
   font-weight: 600;
-  cursor: pointer;
   text-transform: uppercase;
-
-  &:hover {
-    color: #303030;
-  }
 `
 
 export const ArtistPhoto = styled(Image)`
@@ -90,4 +85,27 @@ export const Data = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+
+  a {
+    display: inherit;
+    width: 100%;
+    justify-content: inherit;
+    flex-direction: inherit;
+    padding: 8px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    transition: background-color .4s ease-in-out;
+    
+    * {
+      text-align: center;
+    }
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+
+    &:active {
+      background-color: #b0b0b0;
+    }
+  }
 `

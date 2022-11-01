@@ -30,7 +30,7 @@ import {
 export default function Music ({ album, artist, trackList, ...music }) {
   // const playingMusicAudioContext = useSelector(state => state.playingMusic.audioContext)
   const dispatch = useDispatch()
-  const [iframeHeight, setIframeHeight] = useState("")
+  // const [iframeHeight, setIframeHeight] = useState("")
   const iframeRef = useRef()
 
   useEffect(() => {
@@ -46,18 +46,6 @@ export default function Music ({ album, artist, trackList, ...music }) {
       setIframeHeight(iframeRef.current.offsetWidth * 0.545)
     }
   }, [])
-
-  function decodeEntity (string) {
-    // if (typeof document === 'object') {
-    //   const t = document.createElement('div')
-
-    //   t.innerHTML = string
-
-    //   return t.innerText
-    // } else {
-      return string
-    // }
-  }
 
   return (
     <MusicDetailsContainer>
@@ -88,7 +76,7 @@ export default function Music ({ album, artist, trackList, ...music }) {
             {music.lyrics.map ((lyricParagraphGroup, lyricParagraphGroupIndex) => (
               <LyricParagraphGroup key={lyricParagraphGroupIndex}>
                 {lyricParagraphGroup.map((lyricParagraph, lyricParagraphIndex) => (
-                  <LyricParagraph key={lyricParagraphIndex}>{decodeEntity(lyricParagraph)}</LyricParagraph>
+                  <LyricParagraph key={lyricParagraphIndex}>{lyricParagraph}</LyricParagraph>
                 ))}
               </LyricParagraphGroup>
             ))}

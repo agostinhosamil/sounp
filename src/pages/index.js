@@ -122,8 +122,6 @@ export default function Home() {
 
   return (
     <Container>
-      Home
-
       <MusicFeedContainer>
         {lines.map((line, index) => (
           <MusicFeedLine key={index}>

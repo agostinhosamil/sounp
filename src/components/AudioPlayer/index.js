@@ -113,11 +113,12 @@ export const AudioPlayer = (music) => {
 
     if (!playing) {
       if (!!selectedMusicContext) {
-        containerRef.waveSurfer.seekTo(selectedMusicContext.getCurrentTime() / selectedMusicContext.getDuration())
+        const currentPlayerTime = selectedMusicContext.getCurrentTime() / selectedMusicContext.getDuration()
+        containerRef.waveSurfer.seekTo((currentPlayerTime < 0 || currentPlayerTime > 1) ? 0 : currentPlayerTime)
         selectedMusicContext.pause()
       }
 
-      console.log("Playing => ", music)
+      // console.log("Playing => ", music)
 
       setSelectedMusicContext(containerRef.waveSurfer)
 

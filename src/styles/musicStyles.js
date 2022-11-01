@@ -21,6 +21,9 @@ export const MusicAlbumCover = styled(Image)`
   background-color: #d0d0d0;
   box-shadow: rgba(0,0,0,.4) 0px 3px 5px 0px;
   position: relative;
+  background-size: 100% auto;
+  -webkit-background-size: 100% auto;
+  background-position: center;
 `
 
 export const MusicArtistDataWrapper = styled.div`

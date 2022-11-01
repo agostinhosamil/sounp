@@ -13,6 +13,18 @@ export const HeaderMenuContainer = styled.div`
   position: relative;
   z-index: 5;
 `
+// header menu color => #d5a088
+export const FixedHeaderMenu = styled.div`
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 20;
+  background-color: #f7a27b;
+  border-bottom: 1px solid #d59c5d;
+  box-shadow: rgba(0, 0, 0, .22) -1px 4px 6px;
+`
 
 export const HeaderLogoContainer = styled.div`
   width: 144px;
