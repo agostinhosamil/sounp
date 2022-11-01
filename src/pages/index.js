@@ -6,7 +6,7 @@ import { queryList } from '@config/constants'
 import { MusicCard } from '@components/MusicCard'
 
 import { MusicFeedContainer, MusicFeedLine, Container } from '@styles'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { range } from '~/utils/helper'
 
 const Error = ({ message }) => <h1>Error..! :) {message || ''}</h1>
@@ -24,6 +24,8 @@ export default function Home() {
   const [feedLineContentLength, setFeedLineContentLength] = useState(4)
   const [highlightMusics, setHighlightMusics] = useState([])
   const [nextLink, setNextLink] = useState(null)
+
+  const viewNextFeedContentButtonRef = useRef()
 
   function getFeedLineContentLength () {
     return global.window && Math.round(window.innerWidth / musicCardWidth)
@@ -45,7 +47,7 @@ export default function Home() {
         setHighlightMusics([...highlightMusics, ...results])
       }
     }
-  }
+  }  
 
   // useEffect(() => {
   //   setFeedLineContentLength(getFeedLineContentLength())
@@ -54,7 +56,24 @@ export default function Home() {
 
   useEffect(() => {
     setFeedLineContentLength(getFeedLineContentLength())
-    window.onresize = () => setFeedLineContentLength(getFeedLineContentLength())
+    // window.onresize = )
+    window.addEventListener ('resize', ()  =>{
+      setFeedLineContentLength(getFeedLineContentLength())
+    })
+
+    const pageScrollHandler = (event) => {
+      // console.log([window.scrollTop + window.innerHeight, window.scrollHeight])
+      if (window.scrollY + window.innerHeight >= window.document.body.scrollHeight) {
+        // console.log(event)
+        viewNextFeedContentButtonRef.current?.click()
+      }
+    }
+
+    window.addEventListener ('scroll', pageScrollHandler, true)
+
+    return () => {
+      window.removeEventListener('scroll', pageScrollHandler, true)
+    }
   }, [])
 
   const Loading = () => {
@@ -87,7 +106,19 @@ export default function Home() {
     return <Error message="Not an array" />
   }
 
-  const lines = arraySplit([...highlights, ...highlightMusics], feedLineContentLength)
+  const musicsIds = []
+
+  const feedLineContentFilter = music => {
+    if (musicsIds.indexOf(music.id) < 0) {
+      musicsIds.push(music.id)
+
+      return true
+    }
+
+    return false
+  }
+
+  const lines = arraySplit([...highlights, ...highlightMusics].filter(feedLineContentFilter), feedLineContentLength)
 
   return (
     <Container>
@@ -101,7 +132,7 @@ export default function Home() {
         ))}
 
         <div>
-          <a href="#" onClick={event => viewNextFeedContentHandler({ event, next: nextLink || next })}>Next</a>
+          <a style={{ opacity: 0 }} ref={viewNextFeedContentButtonRef} href="#" onClick={event => viewNextFeedContentHandler({ event, next: nextLink || next })}>Next</a>
         </div>
       </MusicFeedContainer>
     </Container>

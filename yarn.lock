@@ -1507,6 +1507,11 @@ hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.3.0, hoist-non-react-
   dependencies:
     react-is "^16.7.0"
 
+html-entities-decode@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/html-entities-decode/-/html-entities-decode-1.0.2.tgz#2ef85b8906711b55b81de35d0e205a40a96abff3"
+  integrity sha512-dXeAN5/DVTdCfxmKSzvNuuCX/mMDrlPWJbqJKr9qGRuD+NPacHkvfYMhv6KfuPWJisPzla/6z1e8eWzKcr3ggQ==
+
 html-to-text@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/html-to-text/-/html-to-text-5.1.1.tgz#2d89db7bf34bc7bcb7d546b1b228991a16926e87"
@@ -1936,6 +1941,11 @@ node-html-parser@^6.1.1:
   dependencies:
     css-select "^5.1.0"
     he "1.2.0"
+
+nprogress@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nprogress/-/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
+  integrity sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==
 
 nth-check@^2.0.1:
   version "2.1.1"

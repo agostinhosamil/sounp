@@ -1,10 +1,6 @@
 import styled from "styled-components"
 
-const Image = styled.div`
-  background-attachment: scroll;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-`
+import { Image } from '@styles'
 
 export const Container = styled.div`
   position: relative;
@@ -38,7 +34,6 @@ export const AlbumCoverImage = styled(Image)`
   background-color: #d0d0d0;
   height: 290px;
   width: 100%;
-  background-image: url(${props => props.src});
   position: relative;
 
   span.react-loading-skeleton {
@@ -74,7 +69,6 @@ export const ArtistPhoto = styled(Image)`
   border: 5px solid #a9a8a3;
   border-radius: 50%;
   -webkit-border-radius: 50%;
-  background-image: url(${props => props.src});
 `
 
 export const Wrapper = styled.div`

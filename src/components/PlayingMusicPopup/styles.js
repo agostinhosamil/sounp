@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Image } from '@styles'
+
 export const Container = styled.div`
   background-color: #ffffff;
   border: 1px solid #cdcdcd;
@@ -73,18 +75,12 @@ export const PictureContainer = styled.div`
   z-index: 1;
 `
 
-export const Picture = styled.div`
+export const Picture = styled(Image)`
   width: inherit;
   height: inherit;
   background-color: #ede0e0;
   border-radius: 8px;
   -webkit-border-radius: 8px;
-  background-attachment: scroll;
-  background-position: 0px 0px;
-  background-size: 100% 100%;
-  -webkit-background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-image: url(${props => props.src});
 `
 
 export const DataContainer = styled.div`

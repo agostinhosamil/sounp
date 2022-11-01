@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { parse } from 'node-html-parser'
 import { remove as removeAccents } from 'remove-accents'
+import decode from 'html-entities-decode'
 
 export default async function letrasScrapMusicLyric(request, response) {
   const { artist, title } = request.query
@@ -24,7 +25,13 @@ export default async function letrasScrapMusicLyric(request, response) {
 
     const paragraphsList = []
 
-    paragraphs.forEach(paragraph => paragraphsList.push(paragraph.innerHTML.split('<br>')))
+    paragraphs.forEach(paragraph => {
+      const lineList = paragraph.innerHTML.split('<br>').map(line => (
+        decode(line)
+      ))
+      
+      paragraphsList.push(lineList)
+    })
     // console.log(paragraphsList)
 
     response

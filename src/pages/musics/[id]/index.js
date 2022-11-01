@@ -1,13 +1,15 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState, useRef } from 'react'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import lyricsFinder from 'lyrics-finder'
+// import { decodeEntity } from 'html-entities'
 
 import { setSelectedMusic, unsetSelectedMusic } from '@reducers/selectedMusic'
 
 import { AudioPlayer } from '@components/AudioPlayer'
 
 import { MusicSiblings } from './_MusicSiblings'
+import { MusicContributors } from './_MusicContributors'
 
 import {
   MusicDetailsContainer,
@@ -19,11 +21,18 @@ import {
   MusicArtistData,
   MusicTitle,
   MusicArtistName,
-} from './styles'
+  LyricContainer,
+  LyricTitle,
+  LyricParagraphGroup,
+  LyricParagraph,
+  EmbedVideoContainer
+} from './_styles'
 
 export default function Music ({ album, artist, trackList, ...music }) {
   // const playingMusicAudioContext = useSelector(state => state.playingMusic.audioContext)
   const dispatch = useDispatch()
+  const [iframeHeight, setIframeHeight] = useState("")
+  const iframeRef = useRef()
 
   useEffect(() => {
     dispatch(setSelectedMusic({ id: music.id }))
@@ -32,6 +41,24 @@ export default function Music ({ album, artist, trackList, ...music }) {
       dispatch(unsetSelectedMusic())
     }
   }, [dispatch, music.id])
+
+  useEffect(() => {
+    if (iframeRef.current) {
+      setIframeHeight(iframeRef.current.offsetWidth * 0.545)
+    }
+  }, [])
+
+  function decodeEntity (string) {
+    // if (typeof document === 'object') {
+    //   const t = document.createElement('div')
+
+    //   t.innerHTML = string
+
+    //   return t.innerText
+    // } else {
+      return string
+    // }
+  }
 
   return (
     <MusicDetailsContainer>
@@ -55,17 +82,21 @@ export default function Music ({ album, artist, trackList, ...music }) {
         {music.preview && <AudioPlayer artist={artist} album={album} {...music} />}
 
         <h1>Music Id = {music.id}</h1>
-        <h1 style={{fontSize: 50}}>Lyrics</h1>
 
         {music.lyrics instanceof Array && (
-          <div>{music.lyrics.map ((lyricParagraphGroup, lyricParagraphGroupIndex) => (
-            <div style={{padding: '20px', backgroundColor: 'teal', color: 'white', margin: '20px 0px'}} key={lyricParagraphGroupIndex}>
-              {lyricParagraphGroup.map((lyricParagraph, lyricParagraphIndex) => (
-                <p key={lyricParagraphIndex}>{lyricParagraph}</p>
-              ))}
-            </div>
-          ))}</div>
+          <LyricContainer>
+            <LyricTitle>Lyrics</LyricTitle>
+            {music.lyrics.map ((lyricParagraphGroup, lyricParagraphGroupIndex) => (
+              <LyricParagraphGroup key={lyricParagraphGroupIndex}>
+                {lyricParagraphGroup.map((lyricParagraph, lyricParagraphIndex) => (
+                  <LyricParagraph key={lyricParagraphIndex}>{decodeEntity(lyricParagraph)}</LyricParagraph>
+                ))}
+              </LyricParagraphGroup>
+            ))}
+          </LyricContainer>
         )}
+
+        <MusicContributors contributors={music.contributors} />
       </MusicDataContainer>
       <MusicSiblings trackList={trackList} album={album} />
     </MusicDetailsContainer>
@@ -91,7 +122,9 @@ export async function getServerSideProps (context) {
 
     const { data: trackList } = getTrackListResponse.data
 
-    const lyricsData = {}
+    const lyricsData = {
+      content: null
+    }
 
     try {
         // const lyrics = await lyricsFinder(music.artist.name, music.title)
@@ -105,10 +138,15 @@ export async function getServerSideProps (context) {
       const { data: lyrics } = getLyricsResponse.data
 
       // console.log("trackList0003 => ", getTrackListResponse.data.data)
-      console.log("Letras => ", lyrics)
+      // console.log("Letras => ", lyrics)
 
       lyricsData.content = lyrics
     } catch (err) {
+      const lyrics = await lyricsFinder(music.artist.name, music.title)
+
+      if (lyrics) {
+        lyricsData.content = [lyrics.split(/\n+/)]
+      }
     }
 
     return { 
@@ -124,8 +162,7 @@ export async function getServerSideProps (context) {
   } catch (err) {
     const music = { id }
 
-
-    console.log(err)
+    // console.log(err)
 
     return {
       props: { ...music }

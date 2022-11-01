@@ -1,12 +1,6 @@
 import styled from 'styled-components'
 
-export const Image = styled.div`
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: center;
-  background-image: url(${props => props.src});
-`
+import { Image } from '@styles'
 
 export const MusicDetailsContainer = styled.div.attrs({id: 'main'})`
   width: 100%;
@@ -69,3 +63,37 @@ export const MusicArtistName = styled.h3`
   text-transform: uppercase;
 `
 
+export const LyricContainer = styled.div`
+  width: 100%;
+  height: auto;
+  display: block;
+  padding: 0px;
+`
+
+export const LyricTitle = styled.h1`
+  font-size: 54px;
+  color: #444444;
+  margin: 30px 0px;
+`
+
+export const LyricParagraphGroup = styled.div`
+  width: 100%;
+  height: auto;
+  background-color: #f3f3f3;
+  padding: 12px;
+  margin: 12px 0px;
+`
+
+export const LyricParagraph = styled.p`
+  display: block;
+  line-height: 25px;
+  font-size: 20px;
+  color: #4e4a4a;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+`
+
+export const EmbedVideoContainer = styled.div`
+  width: 100%;
+  height: auto;
+`

@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { Image } from '@styles'
+
 export const HeaderMenuContainer = styled.div`
   width: 100%;
   height: auto;
@@ -128,25 +130,25 @@ export const HeaderSearchBoxResultContainer = styled.li`
   }
 `
 
-export const HeaderSearchBoxResultThumb = styled.div`
-  width: 32px;
-  height: 28px;
+export const HeaderSearchBoxResultThumb = styled(Image)`
+  width: inherit;
+  height: inherit;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   background-color: #dadeda;
   margin-right: 8px;
-  background-attachment: scroll;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  -webkit-background-size: 100% 100%;
-  background-image: url(${props => props.src});
+`
+
+export const HeaderSearchBoxResultThumbContainer = styled.div`
+  width: 32px;
+  height: 32px;
 `
 
 export const HeaderSearchBoxResultTitle = styled.strong`
   display: block;
   width: 100%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding-left: 12px;
 `
 
 export const HeaderSearchBoxResultSubTitle = styled.i`

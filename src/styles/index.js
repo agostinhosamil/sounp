@@ -44,3 +44,19 @@ export const Container = styled.div`
   width: 100%;
   height: auto;
 `
+
+export const Image = styled.div.attrs(props => {
+  const style = {}
+
+  if (typeof props.src === typeof 'str' && props.src) {
+    style.backgroundImage = `url(${props.src || ''})`
+  }
+
+  return { style }
+})`
+  background-attachment: scroll;
+  background-color: #ede0e0;
+  background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+  background-repeat: no-repeat;
+`

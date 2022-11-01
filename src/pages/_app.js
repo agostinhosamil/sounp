@@ -1,7 +1,10 @@
 import 'react-loading-skeleton/dist/skeleton.css'
+import 'nprogress/nprogress.css'
 
 import { Fragment } from 'react'
 import { Provider } from 'react-redux'
+import Router from 'next/router'
+import nProgress from 'nprogress'
 
 import { GlobalStyles } from '@styles'
 import { Header } from '@components/Header'
@@ -12,6 +15,10 @@ import { HeaderMenu, HeaderMenuItem } from '@components/HeaderMenu'
 import store from '~/config/state/store'
 
 import MoreMusicsImage from '../images/undraw_media_player_re.svg'
+
+Router.events.on('routeChangeStart', () => nProgress.start()); 
+Router.events.on('routeChangeComplete', () => nProgress.done()); 
+Router.events.on('routeChangeError', () => nProgress.done());
 
 function App({ Component, pageProps }) {
   return (

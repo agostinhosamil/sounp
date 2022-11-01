@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Image } from '../styles'
+import { Image } from '@styles'
 
 export const MusicSiblingsContainer = styled.div`
   width: 580px;

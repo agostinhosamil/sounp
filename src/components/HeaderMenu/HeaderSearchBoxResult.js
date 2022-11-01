@@ -4,6 +4,7 @@ import {
   HeaderSearchBoxResultContainer,
   HeaderSearchBoxResultSubTitle,
   HeaderSearchBoxResultThumb,
+  HeaderSearchBoxResultThumbContainer,
   HeaderSearchBoxResultTitle
 } from './styles'
 
@@ -12,7 +13,9 @@ export function HeaderSearchBoxResult ({ id, title, artist, album }) {
     <HeaderSearchBoxResultContainer>
       <Link href={`/musics/${id}`}>
         <a>
-          <HeaderSearchBoxResultThumb src={ album?.cover_small } />
+          <HeaderSearchBoxResultThumbContainer>
+            <HeaderSearchBoxResultThumb src={ album?.cover_small } />
+          </HeaderSearchBoxResultThumbContainer>
           <HeaderSearchBoxResultTitle>
             { title }
           </HeaderSearchBoxResultTitle>
