@@ -1,6 +1,17 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 import { Image } from '@styles'
+
+const bounceFromRight = keyframes`
+  0% {
+    transform: translateX(100%);
+    z-index: 17;
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+`
 
 export const HeaderMenuContainer = styled.div`
   width: 100%;
@@ -185,6 +196,8 @@ export const HeaderMenuButtonContainer = styled.button.attrs({
   cursor: pointer;
   width: 42px;
   height: 39px;
+  position: relative;
+  z-index: 16;
 
   &:hover {
     color: #ff6366;
@@ -193,4 +206,54 @@ export const HeaderMenuButtonContainer = styled.button.attrs({
   &:active {
     color: #bd5456;
   }
+`
+
+export const MobileHeaderMenuWrapper = styled.div`
+  box-shadow: rgba(0, 0, 0, .42) -6px 0px 20px 2px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%;
+  max-width: 360px;
+  z-index: 15;
+  border-left: 1px solid #c9c3c3;
+  animation: .7s ${bounceFromRight} ease-in-out;
+
+  li {
+    width: 100%;
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    
+    a {
+      display: block;
+      padding: 10px 16px 12px;
+      font-size: 26px;
+
+      span {
+        padding-left: 9px;
+      }
+
+      &:hover {
+        background-color: #ebebeb;
+      }
+
+      &:active {
+        background-color: #e0e0e0;
+      } 
+    }
+  }
+`
+
+export const MobileHeaderMenuBackground = styled.div`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: #ffffff;
+  filter: brightness(130%);
+  opacity: .8;
 `

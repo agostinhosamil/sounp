@@ -42,6 +42,22 @@ export const Container = styled.div`
       z-index: 1;
     }
   }
+
+  @media (max-width: 800px) {
+    background-color: #f5ebeb;
+    margin-top: 15px;
+
+    div {      
+      svg.offRoadLeme {
+        background-color: transparent;
+      }
+
+      h1 {
+        font-size: 40px;
+        line-height: 31px;
+      }
+    }
+  }
 `
 
 export const UndrawOffRoadReLemeContainer = styled.div`
