@@ -5,6 +5,11 @@ import { Image } from '@styles'
 export const MusicSiblingsContainer = styled.div`
   width: 580px;
   padding-left: 22px;
+
+  @media (max-width: 800px) {
+    width: 100%;
+    padding: 0px;
+  }
 `
 
 export const MusicSiblingsTitle = styled.h4`

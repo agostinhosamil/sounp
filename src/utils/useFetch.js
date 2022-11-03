@@ -8,14 +8,14 @@ export const useFetch = (path, options) => {
 
   path = path.trim().replace(slashRe, '')
 
-  const url = `${pathPrefix}/${path}`
+  const url = `${pathPrefix}/${path}`.split(/[\/\\]+/).join('/')
 
   const object = (obj) => {
     const anObject = {}
 
     return obj && obj.constructor === anObject.constructor ? obj : anObject
   }
-
+  
   const { data, error } = useSWR(url, async () => {
     const { data: requestData, ...rest } = await axios.get(url, object(options))
 

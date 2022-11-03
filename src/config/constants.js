@@ -28,3 +28,5 @@ export const queryList = [
   'Dragon ball',
   'Boruto'
 ]
+
+queryList.getRandom = () => queryList[Math.round(Math.random() * (queryList.length - 1))]

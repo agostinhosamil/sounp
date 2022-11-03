@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 
 import { MusicContributor } from './MusicContributor'
 
-import { Container } from './styles'
+import { Container, Title } from './styles'
 
 export function MusicContributors ({ contributors }) {
   
@@ -24,6 +24,7 @@ export function MusicContributors ({ contributors }) {
 
   return (
     <Container>
+      <Title>Contributors</Title>
       {contributors.filter(contributorsListFilter).map(contributor => (
         <MusicContributor key={contributor.id} {...contributor} />
       ))}

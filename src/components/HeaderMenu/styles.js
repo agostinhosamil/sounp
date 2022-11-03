@@ -126,13 +126,15 @@ export const HeaderSearchBoxResultPreviewContainer = styled.div`
   border-width: 1px;
   border-style: solid;
   position: absolute;
+  left: 0px;
+  right: 0px;
   top: 100%;
   box-shadow: rgba(0, 0, 0, .25) 1px 15px 15px 0px;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   -webkit-border-bottom-left-radius: 4px;
   -webkit-border-bottom-right-radius: 4px;
-  overflow-y: auto;
+  text-align: left;
 `
 
 export const HeaderSearchBoxResultPreviewList = styled.ul`
@@ -140,6 +142,7 @@ export const HeaderSearchBoxResultPreviewList = styled.ul`
   list-style: none;
   padding: 0px;
   margin: 0px;
+  overflow-y: auto;
 `
 
 export const HeaderSearchBoxResultContainer = styled.li`
@@ -256,4 +259,45 @@ export const MobileHeaderMenuBackground = styled.div`
   background-color: #ffffff;
   filter: brightness(130%);
   opacity: .8;
+`
+
+export const LoadingContainer = styled.div`
+  width: 100%;
+  height: auto;
+  display: block;
+  padding: 30px 20px;
+`
+
+export const HeaderSearchBoxResultPreviewFooter = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ececec;
+`
+
+export const TotalResults = styled.strong`
+  display: block;
+  white-space: nowrap;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #777777;
+`
+
+export const ViewAllResultsLinkContainer = styled.div`
+  width: 100%;
+  text-align: right;
+
+  a {
+    font-weight: 700;
+    color: #ff6366;
+    font-size: 17px;
+    padding: 3px 12px 6px;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: #ebebeb;
+    }
+  }
 `

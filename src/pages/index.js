@@ -1,9 +1,12 @@
 import axios from 'axios'
+import { SWRConfig } from 'swr'
 import { arraySplit } from 'array-split-base'
 
 import { useFetch } from '@utils/useFetch'
 import { queryList } from '@config/constants'
 import { MusicCard } from '@components/MusicCard'
+
+import { Loading as LoadingSpinner } from '~/components/Loading'
 
 import { MusicFeedContainer, MusicFeedLine, Container } from '@styles'
 import { useEffect, useState, useRef } from 'react'
@@ -11,19 +14,20 @@ import { range } from '~/utils/helper'
 
 const Error = ({ message }) => <h1>Error..! :) {message || ''}</h1>
 
-export default function Home() {
-  const query = queryList[Math.round(Math.random() * (queryList.length - 1))]
+function Home() {
+  const query = queryList.getRandom()
   const musicCardWidth = 360
 
   const { data, error } = useFetch('/search', { 
     params: { 
       q: query 
-    } 
+    }
   })
 
   const [feedLineContentLength, setFeedLineContentLength] = useState(4)
   const [highlightMusics, setHighlightMusics] = useState([])
   const [nextLink, setNextLink] = useState(null)
+  const [feedContentLoading, setFeedContentLoading] = useState(false)
 
   const viewNextFeedContentButtonRef = useRef()
 
@@ -47,6 +51,8 @@ export default function Home() {
         setHighlightMusics([...highlightMusics, ...results])
       }
     }
+
+    setFeedContentLoading(false)
   }  
 
   // useEffect(() => {
@@ -117,6 +123,11 @@ export default function Home() {
 
     return false
   }
+  
+  const viewNextFeedContentButtonClickHandler = (event) => {
+    setFeedContentLoading(true)
+    viewNextFeedContentHandler({ event, next: nextLink || next })
+  }
 
   const lines = arraySplit([...highlights, ...highlightMusics].filter(feedLineContentFilter), feedLineContentLength)
 
@@ -130,13 +141,59 @@ export default function Home() {
         ))}
 
         <div>
-          <a style={{ opacity: 0 }} ref={viewNextFeedContentButtonRef} href="#" onClick={event => viewNextFeedContentHandler({ event, next: nextLink || next })}>Next</a>
+          <a 
+            style={{ opacity: 0 }} 
+            ref={viewNextFeedContentButtonRef} 
+            href="#" 
+            onClick={viewNextFeedContentButtonClickHandler}>
+            Next
+          </a>
         </div>
+
+        {feedContentLoading && (
+          <div>
+            <LoadingSpinner size={50} />
+          </div>
+        )}
       </MusicFeedContainer>
     </Container>
   )
 }
 
-// Home.getInitialProps = async function getInitialProps() {
-//   return {}
-// }
+export default function HomePage ({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <Home />
+    </SWRConfig>
+  )
+}
+
+export const getServerSideProps = async (context) => {
+  var pathPrefix = ''
+
+  if (context.req) {
+    pathPrefix = `http://${context.req.headers.host}`
+  }
+
+  const query = queryList.getRandom()
+
+  try {
+    const response = await axios.get(`${pathPrefix}/api/search`, {
+      params: { q: query }
+    })
+
+    return {
+      props: {
+        fallback: {
+          '/api/search': response.data
+        }
+      }
+    }
+  } catch (err) {
+    console.log(err)
+
+    return {
+      props: {}
+    }
+  }
+}

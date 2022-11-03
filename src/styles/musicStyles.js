@@ -8,6 +8,10 @@ export const MusicDetailsContainer = styled.div.attrs({id: 'main'})`
   position: relative;
   display: flex;
   padding: 30px;
+
+  @media (max-width: 800px) {
+    display: block;
+  }
 ` 
 
 export const MusicDataContainer = styled.div`

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useContext } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 // import WaveSurfer from 'wavesurfer.js'
 
 import AppContext from '@config/state/context'
@@ -11,7 +11,7 @@ export const AudioPlayer = (music) => {
   const containerRef = useRef()
   const playButtonRef = useRef()
   const dispatch = useDispatch()
-  const playingMusicId = useSelector(state => state.playingMusic.data.id)
+  // const playingMusicId = useSelector(state => state.playingMusic.data.id)
   const { setSelectedMusicContext, selectedMusicContext } = useContext(AppContext)
   // const playingMusicAudioContext = useSelector(({ playingMusic }) => playingMusic.audioContext)
 
@@ -124,8 +124,8 @@ export const AudioPlayer = (music) => {
 
       dispatch(setPlayingMusic({ music }))
     } else {
-      //setSelectedMusicContext(null)
-      //dispatch(unsetPlayingMusic())
+      setSelectedMusicContext(null)
+      dispatch(unsetPlayingMusic())
     }
 
     containerRef.waveSurfer.playPause()

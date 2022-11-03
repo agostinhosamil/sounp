@@ -17,7 +17,7 @@ export const elementOffsetY = (element) => {
   }
 
   const offset = {
-    y: element.offsetTop
+    y: element.clientTop
   }
 
   if (element.parentNode instanceof HTMLElement) {
@@ -27,4 +27,32 @@ export const elementOffsetY = (element) => {
   } else {
     return offset.y
   }
+}
+
+export const encodeURI = (string) => {
+  string = encodeURIComponent(string)
+
+  try {
+    if (typeof window == 'object' && window.document) {
+      return btoa(string)
+    }
+  
+    return !!global.Buffer && Buffer.from(string).toString('base64')
+  } catch (err) {
+    return
+  }
+}
+
+export const decodeURI = (string) => {
+  if (typeof window == 'object' && window.document) {
+    try {
+      string = atob(string)
+    } catch(err) {}
+  } else if (!!global.Buffer) {
+    try {
+      string = Buffer.from(string, 'base64').toString('ascii')
+    } catch (err) {}
+  }
+
+  return decodeURIComponent(string)
 }
