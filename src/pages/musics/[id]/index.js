@@ -1,15 +1,16 @@
 import { useEffect, useContext, useState, useRef } from 'react'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
-import lyricsFinder from 'lyrics-finder'
+
+import { getMusicLyrics } from '@utils/getMusicLyrics'
 // import { decodeEntity } from 'html-entities'
 
 import { setSelectedMusic, unsetSelectedMusic } from '@reducers/selectedMusic'
 
 import { AudioPlayer } from '@components/AudioPlayer'
-
 import { MusicSiblings } from '@components/MusicSiblings'
 import { MusicContributors } from '@components/MusicContributors'
+import { getPathPrefixByContext } from '@utils/getPathPrefixByContext'
 
 import {
   MusicDetailsContainer,
@@ -94,11 +95,7 @@ export async function getServerSideProps (context) {
 
   const { id } = context.query
 
-  var pathPrefix = ''
-
-  if (context.req) {
-    pathPrefix = `http://${context.req.headers.host}`
-  }
+  const pathPrefix = getPathPrefixByContext(context)
 
   try {
     const response = await axios.get(`${pathPrefix}/api/musics/${id}`)
@@ -109,32 +106,7 @@ export async function getServerSideProps (context) {
 
     const { data: trackList } = getTrackListResponse.data
 
-    const lyricsData = {
-      content: null
-    }
-
-    try {
-        // const lyrics = await lyricsFinder(music.artist.name, music.title)
-      const getLyricsResponse = await axios.get(`${pathPrefix}/api/vendor/letrasscrapmusiclyric`, {
-        params: {
-          artist: music.artist.name,
-          title: music.title
-        }
-      })
-
-      const { data: lyrics } = getLyricsResponse.data
-
-      // console.log("trackList0003 => ", getTrackListResponse.data.data)
-      // console.log("Letras => ", lyrics)
-
-      lyricsData.content = lyrics
-    } catch (err) {
-      const lyrics = await lyricsFinder(music.artist.name, music.title)
-
-      if (lyrics) {
-        lyricsData.content = [lyrics.split(/\n+/)]
-      }
-    }
+    const lyrics = await getMusicLyrics(music, { pathPrefix })
 
     return { 
       props: { 
@@ -143,7 +115,7 @@ export async function getServerSideProps (context) {
           typeof trackList !== typeof undefined &&
           trackList?.filter(track => track.id !== music.id)
         ),
-        lyrics: lyricsData.content
+        lyrics
       }
     }
   } catch (err) {

@@ -10,7 +10,7 @@ import { Loading as LoadingSpinner } from '~/components/Loading'
 
 import { MusicFeedContainer, MusicFeedLine, Container } from '@styles'
 import { useEffect, useState, useRef } from 'react'
-import { range } from '~/utils/helper'
+import { range, dropDuplicatedArrayElements } from '~/utils/helper'
 
 const Error = ({ message }) => <h1>Error..! :) {message || ''}</h1>
 
@@ -111,25 +111,13 @@ function Home() {
   if (!(highlights instanceof Array)) {
     return <Error message="Not an array" />
   }
-
-  const musicsIds = []
-
-  const feedLineContentFilter = music => {
-    if (musicsIds.indexOf(music.id) < 0) {
-      musicsIds.push(music.id)
-
-      return true
-    }
-
-    return false
-  }
   
   const viewNextFeedContentButtonClickHandler = (event) => {
     setFeedContentLoading(true)
     viewNextFeedContentHandler({ event, next: nextLink || next })
   }
 
-  const lines = arraySplit([...highlights, ...highlightMusics].filter(feedLineContentFilter), feedLineContentLength)
+  const lines = arraySplit(dropDuplicatedArrayElements([...highlights, ...highlightMusics]), feedLineContentLength)
 
   return (
     <Container>

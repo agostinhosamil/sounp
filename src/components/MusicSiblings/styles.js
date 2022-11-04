@@ -82,12 +82,30 @@ export const MusicSiblingTrackDataContainer = styled.div`
   width: 100%;
   margin-left: 8px;
 
-  span {
+  strong {
     display: block;
     width: 100%;
     word-break: break-word;
     font-weight: 300;
     font-size: 16px;
+    padding-bottom: 7px;
+    font-weight: 700;
+    color: #444444;
+  }
+
+  ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    
+    li {
+      list-style-type: none;
+      color: #909090;
+      font-size: 13px;
+      word-spacing: 4px;
+      letter-spacing: 1px;
+      line-height: 19px;
+    }
   }
 `
 

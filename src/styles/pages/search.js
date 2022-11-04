@@ -72,3 +72,27 @@ export const SearchIconContainer = styled.div`
   align-items: center;
   color: #909090;
 `
+
+export const SearchResultsContainer = styled.div`
+  width: 100%;
+  padding: 0px 120px 80px;
+  max-width: 1100px;
+
+  @media (max-width: 1000px) {
+    padding: 0px 70px 80px;
+  }
+
+  @media (max-width: 800px) {
+    padding: 0px 20px 80px;
+  }
+`
+
+export const SearchResultsCount = styled.div`
+  width: 100%;
+`
+
+export const SearchResultsList = styled.div`
+  width: 100%;
+  padding: 40px 0px;
+  margin: 0px;
+`

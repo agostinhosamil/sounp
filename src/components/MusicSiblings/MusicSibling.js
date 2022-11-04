@@ -8,7 +8,13 @@ import {
   MusicSiblingTrackDataContainer
 } from './styles'
 
-export function MusicSibling ({ title, id, album }) {
+export function MusicSibling ({ title, id, album, showLyrics, ...music }) {
+
+  const showMusicLyrics = Boolean(
+    !!showLyrics 
+    && music.lyrics instanceof Array
+    && music.lyrics.length >= 1
+  )
 
   return (
     <MusicSiblingContainer>
@@ -19,7 +25,13 @@ export function MusicSibling ({ title, id, album }) {
               <MusicSiblingAlbumCover src={album?.cover_small} />
             </MusicSiblingAlbumCoverContainer>
             <MusicSiblingTrackDataContainer>
-              <span>{ title }</span>
+              <strong>{ title }</strong>
+              {showMusicLyrics && (
+                <ul>
+                  {music.lyrics.map(line => <li key={line}>{line}</li>)}
+                  <li>...</li>
+                </ul>
+              )}
             </MusicSiblingTrackDataContainer>
           </MusicSiblingBody>
         </a>

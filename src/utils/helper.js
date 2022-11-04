@@ -56,3 +56,17 @@ export const decodeURI = (string) => {
 
   return decodeURIComponent(string)
 }
+
+export const dropDuplicatedArrayElements = (array) => {
+  const arrayElementIds = []
+
+  return array.filter(arrayElement => {
+    if (arrayElementIds.indexOf(arrayElement.id) < 0) {
+      arrayElementIds.push(arrayElement.id)
+
+      return true
+    }
+
+    return false
+  })
+}
