@@ -25,10 +25,11 @@ import {
   LyricContainer,
   LyricTitle,
   LyricParagraphGroup,
-  LyricParagraph
+  LyricParagraph,
+  MusicSiblingsListsWrapper
 } from '@styles/musicStyles'
 
-export default function Music ({ album, artist, trackList, ...music }) {
+export default function Music ({ album, artist, albumTrackList, ...music }) {
   // const playingMusicAudioContext = useSelector(state => state.playingMusic.audioContext)
   const dispatch = useDispatch()
   // const [iframeHeight, setIframeHeight] = useState("")
@@ -47,6 +48,8 @@ export default function Music ({ album, artist, trackList, ...music }) {
       setIframeHeight(iframeRef.current.offsetWidth * 0.545)
     }
   }, [])
+
+  albumTrackList = albumTrackList.map(track => ({ ...track, album }))
 
   return (
     <MusicDetailsContainer>
@@ -86,7 +89,14 @@ export default function Music ({ album, artist, trackList, ...music }) {
 
         <MusicContributors contributors={music.contributors} />
       </MusicDataContainer>
-      <MusicSiblings trackList={trackList} album={album} />
+      <MusicSiblingsListsWrapper>
+        <MusicSiblings trackList={albumTrackList}>
+          <span>Other tracks from <i>{album.title}</i> album:</span>
+        </MusicSiblings>
+        <MusicSiblings trackList={music.artistTrackList}>
+          <span>Other tracks from <i>{artist.name}</i></span>
+        </MusicSiblings>
+      </MusicSiblingsListsWrapper>
     </MusicDetailsContainer>
   )
 }
@@ -102,19 +112,41 @@ export async function getServerSideProps (context) {
 
     const music = response.data
 
-    const getTrackListResponse = await axios.get(music.album.tracklist)
+    const trackLists = {}
 
-    const { data: trackList } = getTrackListResponse.data
+    try { // get album track list
+      const getTrackListResponse = await axios.get(music.album.tracklist)
+
+      const { data: albumTrackList } = getTrackListResponse.data
+
+      if (albumTrackList instanceof Array) {
+        trackLists.albumTrackList = albumTrackList.filter(track => track.id !== music.id)
+      }
+    } catch (err) {
+      // pass
+    }
+    
+    try { // get artist track list
+      const getArtistTrackListResponse = await axios.get(music.artist.tracklist)
+
+      const { data: artistTrackList } = getArtistTrackListResponse.data
+
+      if (artistTrackList) {
+        trackLists.artistTrackList = artistTrackList.filter(track => Boolean(
+          track.id !== music.id &&
+          track.album.id !== music.album.id
+        ));
+      }
+    } catch (err) {
+      // pass
+    }
 
     const lyrics = await getMusicLyrics(music, { pathPrefix })
 
     return { 
       props: { 
         ...music, 
-        trackList: (
-          typeof trackList !== typeof undefined &&
-          trackList?.filter(track => track.id !== music.id)
-        ),
+        ...trackLists,
         lyrics
       }
     }

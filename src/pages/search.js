@@ -181,8 +181,8 @@ export const getServerSideProps = async (context) => {
   const pathPrefix = getPathPrefixByContext(context)
   const searchResultsData = await getSearchResults(query.next, pathPrefix)
 
-  console.log('Total => ', searchResultsData.total)
-  console.log('Next => ', searchResultsData.next)
+  // console.log('Total => ', searchResultsData.total)
+  // console.log('Next => ', searchResultsData.next)
 
   if (searchResultsData.results) {
     return {

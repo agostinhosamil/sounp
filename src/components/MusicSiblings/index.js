@@ -10,7 +10,7 @@ import {
   PaginationLinksWrapper
 } from './styles'
 
-export function MusicSiblings ({ trackList, album }) {
+export function MusicSiblings ({ trackList, children }) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   if (!(trackList instanceof Array &&  trackList.length >= 1)) {
@@ -36,11 +36,11 @@ export function MusicSiblings ({ trackList, album }) {
   return (
     <MusicSiblingsContainer>
       <MusicSiblingsTitle>
-        Other tracks from <i>{album.title}</i> album:
+        {children instanceof Array && [children[0]] || children}
       </MusicSiblingsTitle>
       <MusicSiblingsList>
         {trackList.slice(currentIndex, currentIndex + LIST_MAX_LENGTH).map(track => (
-          <MusicSibling key={track.id} album={album} {...track} />)
+          <MusicSibling key={track.id} album={track.album} {...track} />)
         )}
       </MusicSiblingsList>
       <PaginationLinksWrapper>
