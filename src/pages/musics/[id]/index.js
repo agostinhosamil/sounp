@@ -51,6 +51,8 @@ export default function Music ({ album, artist, albumTrackList, ...music }) {
 
   albumTrackList = albumTrackList.map(track => ({ ...track, album }))
 
+  const validArray = arr => arr instanceof Array && arr.length >= 1
+
   return (
     <MusicDetailsContainer>
       <MusicDataContainer>
@@ -72,8 +74,6 @@ export default function Music ({ album, artist, albumTrackList, ...music }) {
 
         {music.preview && <AudioPlayer artist={artist} album={album} {...music} />}
 
-        <h1>Music Id = {music.id}</h1>
-
         {music.lyrics instanceof Array && (
           <LyricContainer>
             <LyricTitle>Lyrics</LyricTitle>
@@ -89,14 +89,16 @@ export default function Music ({ album, artist, albumTrackList, ...music }) {
 
         <MusicContributors contributors={music.contributors} />
       </MusicDataContainer>
-      <MusicSiblingsListsWrapper>
-        <MusicSiblings trackList={albumTrackList}>
-          <span>Other tracks from <i>{album.title}</i> album:</span>
-        </MusicSiblings>
-        <MusicSiblings trackList={music.artistTrackList}>
-          <span>Other tracks from <i>{artist.name}</i></span>
-        </MusicSiblings>
-      </MusicSiblingsListsWrapper>
+      {(validArray(albumTrackList) || validArray(music.artistTrackList)) && (
+        <MusicSiblingsListsWrapper>
+          <MusicSiblings trackList={albumTrackList}>
+            <span>Other tracks from <i>{album.title}</i> album:</span>
+          </MusicSiblings>
+          <MusicSiblings trackList={music.artistTrackList}>
+            <span>Other tracks from <i>{artist.name}</i></span>
+          </MusicSiblings>
+        </MusicSiblingsListsWrapper>
+      )}
     </MusicDetailsContainer>
   )
 }

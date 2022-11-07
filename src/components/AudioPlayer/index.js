@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState, useContext } from 'react'
 import { useDispatch } from 'react-redux'
+import * as Icon from 'react-icons/sl'
 // import WaveSurfer from 'wavesurfer.js'
 
 import AppContext from '@config/state/context'
 
 import { setPlayingMusic, unsetPlayingMusic } from '@reducers/playingMusic'
+
+import { PlayerButtonsWrapper, PlayButton, DeezerPlayButton } from './styles'
 
 export const AudioPlayer = (music) => {
   const [playing, setPlaying] = useState(false)
@@ -130,13 +133,24 @@ export const AudioPlayer = (music) => {
 
     containerRef.waveSurfer.playPause()
   }
+  
+  function handleOpenMusicOnDeezer () {
+    window.open(music.link, 'DeezerTrack')
+  }
+
+  const PlayButtonIcon = Icon[playing ? 'SlControlPause' : 'SlControlPlay']
 
   return (
     <div>
       <div ref={containerRef}></div>
-      <button ref={playButtonRef} onClick={handlePlayPause}>
-        {!playing ? 'Play' : 'Pause'}
-      </button>
+      <PlayerButtonsWrapper>
+        <PlayButton ref={playButtonRef} onClick={handlePlayPause}>
+          <PlayButtonIcon />
+        </PlayButton>
+        <DeezerPlayButton onClick={handleOpenMusicOnDeezer}>
+          <span>Play music on Deezer</span>
+        </DeezerPlayButton>
+      </PlayerButtonsWrapper>
     </div>
   )
 }
