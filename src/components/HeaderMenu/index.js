@@ -90,7 +90,7 @@ export function HeaderMenu ({ children }) {
     <HeaderMenuContainerWrapper {...containerWrapperProps}>
       <HeaderMenuContainer ref={containerRef}>
         <HeaderLogoContainer>
-          <span>DeezerAPI</span>
+          <span>Sounya</span>
         </HeaderLogoContainer>
         <HeaderSearchBoxContainer>
           <IconContainer>
