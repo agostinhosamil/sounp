@@ -68,14 +68,14 @@ export const ArtistPhoto = styled(Image)`
 
 export const Wrapper = styled.div`
   background-color: #ffffff;
-  border: 2px solid #4483c5;
+  border: 2px solid #d0d0d0;
   width: 100%;
   height: auto;
   border-radius: 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
-  box-shadow: #4483c5 3px 4px 0px;
+  /* box-shadow: #4483c5 3px 4px 0px; */
 `
 
 export const Data = styled.div`

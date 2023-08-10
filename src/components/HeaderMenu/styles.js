@@ -23,6 +23,16 @@ export const HeaderMenuContainer = styled.div`
   align-items: center;
   position: relative;
   z-index: 5;
+
+  .x-focus {
+    position: fixed;
+    width: 96%;
+    top: 20px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    z-index: 1000;
+  }
 `
 // header menu color => #d5a088
 export const FixedHeaderMenu = styled.div`
@@ -35,6 +45,10 @@ export const FixedHeaderMenu = styled.div`
   background-color: #f7a27b;
   border-bottom: 1px solid #d59c5d;
   box-shadow: rgba(0, 0, 0, .22) -1px 4px 6px;
+
+  div span {
+    color: #ffffff;
+  }
 `
 
 export const HeaderLogoContainer = styled.div`

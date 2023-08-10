@@ -17,9 +17,16 @@ export const useFetch = (path, options) => {
   }
   
   const { data, error } = useSWR(url, async () => {
-    const { data: requestData, ...rest } = await axios.get(url, object(options))
+    try {
+      const { data: requestData, ...rest } = await axios.get(url, object(options))
 
-    return requestData
+      return requestData
+    } catch (error) {
+      return {
+        error,
+        data: null
+      }
+    }
   })
 
   return {

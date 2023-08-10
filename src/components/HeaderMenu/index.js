@@ -25,6 +25,7 @@ export function HeaderMenu ({ children }) {
   const [fixed, setFixed] = useState(false)
   const [hideMenuItems, setHideMenuItems] = useState(false)
   const containerRef = useRef()
+  const headerSearchBoxContainerRef = useRef()
   const inputRef = useRef()
 
   useEffect(() => {
@@ -67,10 +68,16 @@ export function HeaderMenu ({ children }) {
 
   function searchBoxInputBlurHandler () {
     setTimeout(() => setShowPreview(false), 200)
+    
+    headerSearchBoxContainerRef.current?.classList.remove('x-focus')
   }
 
   function searchBoxInputFocusHandler () {
     setShowPreview(true)
+    
+    if (window.innerWidth <= 700) {
+      headerSearchBoxContainerRef.current?.classList.add('x-focus')
+    }
   }
 
   function validQuery (query) {
@@ -92,7 +99,7 @@ export function HeaderMenu ({ children }) {
         <HeaderLogoContainer>
           <span>Sounya</span>
         </HeaderLogoContainer>
-        <HeaderSearchBoxContainer>
+        <HeaderSearchBoxContainer ref={headerSearchBoxContainerRef}>
           <IconContainer>
             <Icon.SlMagnifier />
           </IconContainer>
