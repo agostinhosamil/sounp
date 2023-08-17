@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState, useRef } from 'react'
+import { useEffect, useContext, useState, useRef, Fragment } from 'react'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -10,6 +10,7 @@ import { setSelectedMusic, unsetSelectedMusic } from '@reducers/selectedMusic'
 import { AudioPlayer } from '@components/AudioPlayer'
 import { MusicSiblings } from '@components/MusicSiblings'
 import { MusicContributors } from '@components/MusicContributors'
+import { MusicYoutubeIFrame } from '@components/MusicYoutubeIFrame'
 import { getPathPrefixByContext } from '@utils/getPathPrefixByContext'
 
 import {
@@ -25,14 +26,16 @@ import {
   LyricContainer,
   LyricTitle,
   LyricParagraphGroup,
+  MusicFluidWrapper,
   LyricParagraph,
+  MusicExplicitLabel,
   MusicSiblingsListsWrapper
 } from '@styles/musicStyles'
 
 export default function Music ({ album, artist, albumTrackList, ...music }) {
   // const playingMusicAudioContext = useSelector(state => state.playingMusic.audioContext)
   const dispatch = useDispatch()
-  // const [iframeHeight, setIframeHeight] = useState("")
+  const [iframeHeight, setIframeHeight] = useState("")
   const iframeRef = useRef()
 
   useEffect(() => {
@@ -57,43 +60,59 @@ export default function Music ({ album, artist, albumTrackList, ...music }) {
     <MusicDetailsContainer>
       <MusicDataContainer>
         <MusicAlbumCover src={album?.cover_xl} />
-        <MusicArtistDataWrapper>
-          <MusicArtistPhotoContainer>
-            <MusicArtistPhoto src={artist?.picture_big} />
-          </MusicArtistPhotoContainer>
-          <MusicArtistData>
-            <MusicTitle>
-              {music.title}
-            </MusicTitle>
-            <MusicArtistName>
-              {artist?.name}
-            </MusicArtistName>
-          </MusicArtistData>
-        </MusicArtistDataWrapper>
-        {music.explicit_lyrics && <span>Explicit</span>}
+        <MusicFluidWrapper>
+          <MusicArtistDataWrapper>
+            <MusicArtistPhotoContainer>
+              <MusicArtistPhoto src={artist?.picture_big} />
+            </MusicArtistPhotoContainer>
+            <MusicArtistData>
+              <MusicTitle>
+                {music.title}
+              </MusicTitle>
+              <MusicArtistName>
+                {artist?.name}
+              </MusicArtistName>
+            </MusicArtistData>
+          </MusicArtistDataWrapper>
+          {music.explicit_lyrics && <MusicExplicitLabel>Explicit</MusicExplicitLabel>}
 
-        {music.preview && <AudioPlayer artist={artist} album={album} {...music} />}
+          {music.preview && <AudioPlayer artist={artist} album={album} {...music} />}
 
-        {music.lyrics instanceof Array && (
-          <LyricContainer>
-            <LyricTitle>Lyrics</LyricTitle>
-            {music.lyrics.map ((lyricParagraphGroup, lyricParagraphGroupIndex) => (
-              <LyricParagraphGroup key={lyricParagraphGroupIndex}>
-                {lyricParagraphGroup.map((lyricParagraph, lyricParagraphIndex) => (
-                  <LyricParagraph key={lyricParagraphIndex}>{lyricParagraph}</LyricParagraph>
-                ))}
-              </LyricParagraphGroup>
-            ))}
-          </LyricContainer>
-        )}
+          {music.lyrics instanceof Array && (
+            <LyricContainer>
+              <LyricTitle>Lyrics</LyricTitle>
+              {music.lyrics.map ((lyricParagraphGroup, lyricParagraphGroupIndex) => (
+                <LyricParagraphGroup key={lyricParagraphGroupIndex}>
+                  {lyricParagraphGroup.map((lyricParagraph, lyricParagraphIndex) => (
+                    <LyricParagraph key={lyricParagraphIndex}>{lyricParagraph}</LyricParagraph>
+                  ))}
+                </LyricParagraphGroup>
+              ))}
+            </LyricContainer>
+          )}
 
-        <MusicContributors contributors={music.contributors} />
+          {music.youtubeEmbedUrl && (
+            <Fragment>
+              <h1>Music video clip:</h1>
+              <br />
+              <MusicYoutubeIFrame 
+                src={ music.youtubeEmbedUrl } 
+                title={ `${artist?.name} - ${music.title}` } 
+                />
+            </Fragment>
+          )}
+
+          <MusicContributors contributors={music.contributors} />
+        </MusicFluidWrapper>
       </MusicDataContainer>
       {(validArray(albumTrackList) || validArray(music.artistTrackList)) && (
         <MusicSiblingsListsWrapper>
           <MusicSiblings trackList={albumTrackList}>
             <span>Other tracks from <i>{album.title}</i> album:</span>
           </MusicSiblings>
+          {/* <MusicSiblings trackList={albumTrackList}>
+            <span>Other tracks from <i>{album.title}</i> album:</span>
+          </MusicSiblings> */}
           <MusicSiblings trackList={music.artistTrackList}>
             <span>Other tracks from <i>{artist.name}</i></span>
           </MusicSiblings>
@@ -114,7 +133,10 @@ export async function getServerSideProps (context) {
 
     const music = response.data
 
-    const trackLists = {}
+    const trackLists = {
+      trackLists: [],
+      artistTrackList: []
+    }
 
     try { // get album track list
       const getTrackListResponse = await axios.get(music.album.tracklist)
@@ -133,7 +155,7 @@ export async function getServerSideProps (context) {
 
       const { data: artistTrackList } = getArtistTrackListResponse.data
 
-      if (artistTrackList) {
+      if (artistTrackList instanceof Array) {
         trackLists.artistTrackList = artistTrackList.filter(track => Boolean(
           track.id !== music.id &&
           track.album.id !== music.album.id
@@ -143,12 +165,13 @@ export async function getServerSideProps (context) {
       // pass
     }
 
-    const lyrics = await getMusicLyrics(music, { pathPrefix })
+    const { lyrics, ...musicProps } = await getMusicLyrics(music, { pathPrefix })
 
     return { 
       props: { 
         ...music, 
         ...trackLists,
+        ...musicProps,
         lyrics
       }
     }

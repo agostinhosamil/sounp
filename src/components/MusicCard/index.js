@@ -1,43 +1,55 @@
-// import { Fragment } from 'react'
+import { Fragment } from 'react'
 import Link from 'next/link'
-import Skeleton from 'react-loading-skeleton'
 
-import { 
+import { LoadingMusicCardContent } from './LoadingMusicCardContent'
+
+import {
   AlbumCoverImageWrapper,
   AlbumCoverImage,
-  TitleSkeleton,
   ArtistPhoto,
   ArtistName,
   Container,
+  CardLink,
   Wrapper,
   Title,
   Data
 } from './styles'
 
-export function MusicCard ({ title, artist, album, loading, id }) {
+export function MusicCard({ title, artist, album, loading, id }) {
+
+  const href = `/musics/${id}/`
+
+  const albumCoverImageRef = (albumCoverImageElement) => {
+    if (albumCoverImageElement) {
+      const albumCoverImageElementWidth = albumCoverImageElement.offsetWidth
+
+      albumCoverImageElement.style.height = `${albumCoverImageElementWidth * 0.5}px`
+    }
+  }
+
   return (
     <Container>
-      <Wrapper>
-        <AlbumCoverImage src={album?.cover_medium}>
-          {loading && <Skeleton height={290} />}
-          <AlbumCoverImageWrapper>
-            <ArtistPhoto src={artist?.picture_medium} />
-          </AlbumCoverImageWrapper>
-        </AlbumCoverImage>
-        <Data>
-          <Link href={['/musics', id].join('/')}>
-            <a>
-              {!loading && <Title>{title}</Title> || (
-                <TitleSkeleton>
-                  <Skeleton />
-                </TitleSkeleton>
-              )}
-              
-              {!loading && <ArtistName>{artist?.name}</ArtistName> || <Skeleton count={4} />}
-            </a>
-          </Link>
-        </Data>
-      </Wrapper>
+      <Link href={href}>
+        <CardLink href={href}>
+          <Wrapper>
+            {loading && <LoadingMusicCardContent /> || (
+              <Fragment>
+                <AlbumCoverImage
+                  src={album?.cover_medium}
+                  ref={albumCoverImageRef}>
+                  <AlbumCoverImageWrapper>
+                    <ArtistPhoto src={artist?.picture_medium} />
+                  </AlbumCoverImageWrapper>
+                </AlbumCoverImage>
+                <Data>
+                  <Title>{title}</Title>
+                  <ArtistName>{artist?.name}</ArtistName>
+                </Data>
+              </Fragment>
+            )}
+          </Wrapper>
+        </CardLink>
+      </Link>
     </Container>
   )
 }

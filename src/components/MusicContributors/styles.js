@@ -30,10 +30,6 @@ export const MusicContributorContainer = styled.div`
   
   @media (min-width: 801px) {
     transition: transform .4s ease-in-out;
-
-    &:hover {
-      transform: scale3d(1.2, 1.2, 1.4) skew(1deg);
-    }
   }
 `
 

@@ -15,5 +15,5 @@ export default async function googleScrapMusicLyric(request, response) {
 
   response
     .status(200)
-    .json({ data: Buffer.from(res.data).toString('base64') })
+    .json({ data: res.data })
 }

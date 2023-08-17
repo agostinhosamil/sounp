@@ -31,7 +31,7 @@ function App({ Component, pageProps }) {
             label="Home" 
             icon="SlHome" 
             />
-          {/* <HeaderMenuItem 
+          <HeaderMenuItem 
             label="About Me" 
             icon="SlUser" 
             href="/about"
@@ -40,7 +40,12 @@ function App({ Component, pageProps }) {
             label="Contact" 
             href="/contact"
             icon="SlPhone" 
-            /> */}
+            />
+          <HeaderMenuItem 
+            label="Post" 
+            href="/post"
+            icon="SlPhone" 
+            />
         </HeaderMenu>
         <HeaderCover>
           <MoreMusicsImage />

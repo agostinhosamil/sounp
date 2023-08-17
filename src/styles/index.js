@@ -7,7 +7,7 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background-color: #fbfbfb;
+    background-color: #ffffff;
   }
 
   a {
@@ -50,6 +50,8 @@ export const MusicFeedLine = styled.div`
 export const Container = styled.div`
   width: 100%;
   height: auto;
+  max-width: 1200px;
+  margin: auto;
 `
 
 export const Image = styled.div.attrs(props => {

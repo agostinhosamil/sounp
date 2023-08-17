@@ -43,10 +43,11 @@ export const FixedHeaderMenu = styled.div`
   right: 0px;
   z-index: 20;
   background-color: #f7a27b;
-  border-bottom: 1px solid #d59c5d;
-  box-shadow: rgba(0, 0, 0, .22) -1px 4px 6px;
+  padding: 5px 0px 7px;
+  /* border-bottom: 1px solid #d59c5d; */
+  /* box-shadow: rgba(0,0,0,.22) -1px 4px 6px; */
 
-  div span {
+  div span.appName {
     color: #ffffff;
   }
 `
@@ -226,7 +227,7 @@ export const HeaderMenuButtonContainer = styled.button.attrs({
 `
 
 export const MobileHeaderMenuWrapper = styled.div`
-  box-shadow: rgba(0, 0, 0, .42) -6px 0px 20px 2px;
+  box-shadow: rgb(0 0 0 / 20%) -6px 0px 20px 2px;
   position: fixed;
   top: 0px;
   right: 0px;
@@ -235,7 +236,7 @@ export const MobileHeaderMenuWrapper = styled.div`
   width: 100%;
   max-width: 360px;
   z-index: 15;
-  border-left: 1px solid #c9c3c3;
+  border-left: 1px solid #c9c9c9;
   animation: .7s ${bounceFromRight} ease-in-out;
 
   li {
@@ -246,7 +247,7 @@ export const MobileHeaderMenuWrapper = styled.div`
     
     a {
       display: block;
-      padding: 10px 16px 12px;
+      padding: 30px 16px 32px;
       font-size: 26px;
 
       span {

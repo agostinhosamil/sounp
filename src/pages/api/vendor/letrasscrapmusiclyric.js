@@ -3,8 +3,11 @@ import { parse } from 'node-html-parser'
 import { remove as removeAccents } from 'remove-accents'
 import decode from 'html-entities-decode'
 
+import { getYoutubeMusicLinkByRefs } from '@utils/getYoutubeMusicLinkByRefs'
+
 export default async function letrasScrapMusicLyric(request, response) {
   const { artist, title } = request.query
+  const musicProps = {}
   // const artist = '7 MINUTOZ'
   // const title = 'Rap do Killua'
 
@@ -12,14 +15,25 @@ export default async function letrasScrapMusicLyric(request, response) {
     return removeAccents(data.split(/\s+/).join('-')).split(/[^a-zA-Z0-9_-]/).join('')
   }
 
-  const url = `https://www.letras.mus.br/${parseData(artist)}/${parseData(title)}`
+  const [artistName, musicTitle] = [parseData(artist), parseData(title)]
+  const url = `https://www.letras.mus.br/${artistName}/${musicTitle}`
+  const musicYoutubeLink = await getYoutubeMusicLinkByRefs({ 
+    artistName: artist, 
+    musicTitle: title 
+  })
 
+  const youtubeUrlObject = new URL(musicYoutubeLink)
+  const musicYoutubeId = youtubeUrlObject.searchParams.get('v')
+
+  musicProps.youtubeUrl = musicYoutubeLink
+  musicProps.youtubeEmbedUrl = `https://www.youtube.com/embed/${musicYoutubeId}`
+  
   try {
     const res = await axios.get(url)
 
     const page = parse(res.data)
 
-    const content = page.querySelector('div.cnt-letra')
+    const content = page.querySelector('div.lyric-original')
 
     const paragraphs = content.querySelectorAll('p')
 
@@ -36,7 +50,10 @@ export default async function letrasScrapMusicLyric(request, response) {
 
     response
       .status(200)
-      .json({ data: paragraphsList })
+      .json({ 
+        data: paragraphsList,  
+        ...musicProps
+      })
   } catch (err) {
     response
       .status(500)

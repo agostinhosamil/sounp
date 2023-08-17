@@ -3,11 +3,12 @@ import lyricsFinder from 'lyrics-finder'
 
 export async function getMusicLyrics (music, {pathPrefix = ''}) {
   const lyricsData = {
-    content: null
+    content: null,
+    musicProps: null
   }
 
   try {
-      // const lyrics = await lyricsFinder(music.artist.name, music.title)
+    // const lyrics = await lyricsFinder(music.artist.name, music.title)
     const getLyricsResponse = await axios.get(`${pathPrefix}/api/vendor/letrasscrapmusiclyric`, {
       params: {
         artist: music.artist.name,
@@ -15,9 +16,10 @@ export async function getMusicLyrics (music, {pathPrefix = ''}) {
       }
     })
 
-    const { data: lyrics } = getLyricsResponse.data
+    const { data: lyrics, ...musicProps } = getLyricsResponse.data
 
     lyricsData.content = lyrics
+    lyricsData.musicProps = musicProps
   } catch (err) {
     const lyrics = await lyricsFinder(music.artist.name, music.title)
 
@@ -26,7 +28,10 @@ export async function getMusicLyrics (music, {pathPrefix = ''}) {
     }
   }
 
-  return lyricsData.content
+  return {
+    ...lyricsData.musicProps,
+    lyrics: lyricsData.content 
+  }
 }
 
 export async function getMusicLyricSummary (music, {pathPrefix = '', maxLength = 255}) {

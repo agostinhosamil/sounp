@@ -6,8 +6,25 @@ export const Container = styled.div`
   position: relative;
   padding: 10px;
   width: 360px;
-  height: 470px;
+  height: 275px;
   display: flex;
+`
+
+export const CardLink = styled.a`
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  position: relative;
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  transition: background-color .2s ease-in;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
 `
 
 export const Title = styled.h3`
@@ -15,11 +32,10 @@ export const Title = styled.h3`
   font-weight: 600;
   text-align: center;
   max-height: 90px;
-  display: flex;
-  align-items: flex-start;
-  align-content: center;
-  justify-content: center;
-  overflow-y: hidden;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
 `
 
 export const TitleSkeleton = styled.div`
@@ -32,9 +48,11 @@ export const TitleSkeleton = styled.div`
 export const AlbumCoverImage = styled(Image)`
   border-bottom: 1px solid #cdcdcd;
   background-color: #d0d0d0;
-  height: 290px;
+  height: 132px;
   width: 100%;
   position: relative;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
 
   span.react-loading-skeleton {
     line-height: inherit;
@@ -48,13 +66,17 @@ export const AlbumCoverImageWrapper = styled.div`
 `
 
 export const ArtistName = styled.span`
-  display: inline-block;
-  padding: 7px 0px;
+  padding: 7px 0px 0px;
   margin: auto;
   font-size: 18px;
   color: #34669b;
   font-weight: 600;
   text-transform: uppercase;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  text-align: center;
 `
 
 export const ArtistPhoto = styled(Image)`
@@ -67,8 +89,6 @@ export const ArtistPhoto = styled(Image)`
 `
 
 export const Wrapper = styled.div`
-  background-color: #ffffff;
-  border: 2px solid #d0d0d0;
   width: 100%;
   height: auto;
   border-radius: 4px;

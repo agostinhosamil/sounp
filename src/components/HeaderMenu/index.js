@@ -16,6 +16,7 @@ import {
   HeaderSearchBox,
   HeaderSearchBoxInput
 } from './styles'
+import Link from 'next/link'
 
 // import DeezerLogo from './deezer_logo.svg'
 
@@ -62,7 +63,7 @@ export function HeaderMenu ({ children }) {
     }
   })
 
-  function searchBoxInputChangeHandler ({ target, ...event }) {
+  function searchBoxInputChangeHandler ({ target }) {
     setQuery(target.value)
   }
 
@@ -97,7 +98,11 @@ export function HeaderMenu ({ children }) {
     <HeaderMenuContainerWrapper {...containerWrapperProps}>
       <HeaderMenuContainer ref={containerRef}>
         <HeaderLogoContainer>
-          <span>Sounya</span>
+          <Link href="/">
+            <a>
+              <span className='appName'>Sounya</span>
+            </a>
+          </Link>
         </HeaderLogoContainer>
         <HeaderSearchBoxContainer ref={headerSearchBoxContainerRef}>
           <IconContainer>

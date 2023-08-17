@@ -46,6 +46,7 @@ export const Container = styled.div`
   @media (max-width: 800px) {
     background-color: #f5ebeb;
     margin-top: 15px;
+    display: none;
 
     div {      
       svg.offRoadLeme {

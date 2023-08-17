@@ -41,15 +41,21 @@ export const MusicSiblingContainer = styled.li`
     width: 100%;
     display: block;
     padding: 12px;
-    border: 1px solid #d7d7d7;
     border-radius: 8px;
     -webkit-border-radius: 8px;
     background-color: #ffffff;
-    box-shadow: rgba(0, 0, 0, .15) 1px 0px 7px;
     transition: background-color .3s ease-in-out;
 
     &:hover {
-      background-color: #e0e0e0;
+      background-color: #f1f1f1;
+    }
+
+    &:active {
+      background-color: #f7a27b;
+
+      strong {
+        color: #ffffff;
+      }
     }
   }
 `
@@ -87,6 +93,7 @@ export const MusicSiblingTrackDataContainer = styled.div`
     padding-bottom: 7px;
     font-weight: 700;
     color: #444444;
+    pointer-events: none;
   }
 
   ul {

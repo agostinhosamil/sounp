@@ -11,12 +11,22 @@ export const MusicDetailsContainer = styled.div.attrs({id: 'main'})`
 
   @media (max-width: 800px) {
     display: block;
+    padding: 0px;
   }
-` 
+`
 
 export const MusicDataContainer = styled.div`
   background-color: #ffffff;
   width: 100%;
+`
+
+export const MusicFluidWrapper = styled.div`
+  height: auto;
+  background: transparent none repeat scroll 0% 0%;
+
+  @media (max-width: 800px) {
+    padding: 35px;
+  }
 `
 
 export const MusicAlbumCover = styled(Image)`
@@ -28,6 +38,14 @@ export const MusicAlbumCover = styled(Image)`
   background-size: 100% auto;
   -webkit-background-size: 100% auto;
   background-position: center;
+
+  @media (max-width: 1080px) {
+    max-height: 250px;
+  }
+
+  @media (max-width: 800px) {
+    box-shadow: none;
+  }
 `
 
 export const MusicArtistDataWrapper = styled.div`
@@ -42,6 +60,10 @@ export const MusicArtistDataWrapper = styled.div`
 export const MusicArtistPhotoContainer = styled.div`
   height: 170px;
   padding-right: 25px;
+
+  @media (max-width: 1020px) {
+    height: auto;
+  }
 `
 
 export const MusicArtistPhoto = styled(Image)`
@@ -53,6 +75,11 @@ export const MusicArtistPhoto = styled(Image)`
   border: 5px solid #a3a0a0;
   background-size: 100% 100%;
   -webkit-background-size: 100% 100%;
+
+  @media (max-width: 1020px) {
+    width: 95px;
+    height: 95px;
+  }
 `
 
 export const MusicArtistData = styled.div`
@@ -62,12 +89,20 @@ export const MusicArtistData = styled.div`
 export const MusicTitle = styled.h1`
   color: #333333;
   font-size: 48px;
+
+  @media (max-width: 1020px) {
+    font-size: 35px;
+  }
 `
 
 export const MusicArtistName = styled.h3`
   color: #9f9898;
   font-size: 31px;
   text-transform: uppercase;
+
+  @media (max-width: 1020px) {
+    font-size: 25px;
+  }
 `
 
 export const LyricContainer = styled.div`
@@ -89,6 +124,12 @@ export const LyricParagraphGroup = styled.div`
   background-color: #f3f3f3;
   padding: 12px;
   margin: 12px 0px;
+
+  @media (max-width: 800px) {
+    background-color: transparent;
+    padding: 0px;
+    margin-bottom: 70px;
+  }
 `
 
 export const LyricParagraph = styled.p`
@@ -105,12 +146,21 @@ export const EmbedVideoContainer = styled.div`
   height: auto;
 `
 
-export const MusicSiblingsListsWrapper = styled.div`
+export const MusicSiblingsListsWrapper = styled(MusicFluidWrapper)`
   width: 580px;
   padding-left: 22px;
 
   @media (max-width: 800px) {
     width: 100%;
-    padding: 0px;
   }
+`
+
+export const MusicExplicitLabel = styled.span`
+  font-size: 18px;
+  margin: 20px 0px;
+  display: inline-block;
+  background-color: #ebebeb;
+  color: #b79a9a;
+  border-radius: 38px;
+  padding: 2px 24px 4px;
 `
