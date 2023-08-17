@@ -6,10 +6,19 @@ export function MusicYoutubeIFrame ({ src, title }) {
   const iframeRef = useRef()
 
   useEffect(() => {
+    
+    function windowResizeHandler () {
+      setIframeHeight(iframeRef.current.offsetWidth * 0.56273)
+    }
+    
     if (iframeRef.current) {
-      const iframeWidth = iframeRef.current.offsetWidth
-      
-      setIframeHeight(iframeWidth * 0.56273)
+      windowResizeHandler()
+    }
+
+    window.addEventListener('resize', windowResizeHandler, true)
+
+    return () => {
+      window.removeEventListener('resize', windowResizeHandler, true)
     }
   }, [])
 
