@@ -29,7 +29,6 @@ export async function getYoutubeMusicLinkByRefs ({ artistName, musicTitle }) {
       }
       
     }
-alternativeLinkElementContainer
   } catch (err) {
     // pass
     console.log('Err => ', err)
