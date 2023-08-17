@@ -11,12 +11,28 @@ export async function getYoutubeMusicLinkByRefs ({ artistName, musicTitle }) {
       const document = parse(googleSearchResponse.data)
 
       const linkElementContainer = document.querySelector('div.BNeawe.tAd8D.AP7Wnd')
+      const alternativeLinkElementContainer = document.querySelector('div.egMi0.kCrYT')
     
-      return linkElementContainer.innerText?.trim()
-    }
+      if (linkElementContainer) {
+        return linkElementContainer.innerText?.trim()
+      }
 
+      if (alternativeLinkElementContainer) {
+        const alternativeLinkElement = alternativeLinkElementContainer.querySelector('a')
+
+        if (alternativeLinkElement) {
+          const alternativeLink = `https://www.google.com/${alternativeLinkElement.getAttribute('href')}`
+          const alternativeLinkObject = new URL(alternativeLink)
+
+          return alternativeLinkObject.searchParams.get('q')
+        }
+      }
+      
+    }
+alternativeLinkElementContainer
   } catch (err) {
     // pass
+    console.log('Err => ', err)
   }
   
   return null;

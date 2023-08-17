@@ -22,11 +22,15 @@ export default async function letrasScrapMusicLyric(request, response) {
     musicTitle: title 
   })
 
-  const youtubeUrlObject = new URL(musicYoutubeLink)
-  const musicYoutubeId = youtubeUrlObject.searchParams.get('v')
+  if (musicYoutubeLink) {
+    const youtubeUrlObject = new URL(musicYoutubeLink)
+    const musicYoutubeId = youtubeUrlObject.searchParams.get('v')
 
-  musicProps.youtubeUrl = musicYoutubeLink
-  musicProps.youtubeEmbedUrl = `https://www.youtube.com/embed/${musicYoutubeId}`
+    musicProps.youtubeUrl = musicYoutubeLink
+    musicProps.youtubeEmbedUrl = `https://www.youtube.com/embed/${musicYoutubeId}`
+  } else {
+    console.log(musicYoutubeLink)
+  }
   
   try {
     const res = await axios.get(url)
