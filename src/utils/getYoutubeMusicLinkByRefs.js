@@ -2,6 +2,7 @@ import axios from 'axios'
 import { parse } from 'node-html-parser'
 
 export async function getYoutubeMusicLinkByRefs ({ artistName, musicTitle }) {
+  const urlPattern = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/
   const googleSearchUrl = `https://www.google.com/search?q=site:youtube.com+${encodeURIComponent (artistName)}+${encodeURIComponent (musicTitle)}&sca_esv=557753954&gbv=1&sei=dvzdZIsPoYvBuQ-Q54JA`
 
   try {
@@ -14,7 +15,11 @@ export async function getYoutubeMusicLinkByRefs ({ artistName, musicTitle }) {
       const alternativeLinkElementContainer = document.querySelector('div.egMi0.kCrYT')
     
       if (linkElementContainer) {
-        return linkElementContainer.innerText?.trim()
+        const link = linkElementContainer.innerText?.trim()
+        
+        if (urlPattern.test(link)) {
+          return link
+        }
       }
 
       if (alternativeLinkElementContainer) {
@@ -23,16 +28,19 @@ export async function getYoutubeMusicLinkByRefs ({ artistName, musicTitle }) {
         if (alternativeLinkElement) {
           const alternativeLink = `https://www.google.com/${alternativeLinkElement.getAttribute('href')}`
           const alternativeLinkObject = new URL(alternativeLink)
+          const alternativeLinkObjectQuery = alternativeLinkObject.searchParams.get('q')
 
-          return alternativeLinkObject.searchParams.get('q')
+          if (urlPattern.test(alternativeLinkObjectQuery)) {
+            return alternativeLinkObjectQuery
+          }
         }
       }
       
     }
   } catch (err) {
     // pass
-    console.log('Err => ', err)
+    // console.log('Error => ', err)
   }
   
-  return null;
+  return null
 }

@@ -21,10 +21,6 @@ export const CardLink = styled.a`
   transition: background-color .2s ease-in;
   border-radius: 8px;
   -webkit-border-radius: 8px;
-
-  &:hover {
-    background-color: #f9f9f9;
-  }
 `
 
 export const Title = styled.h3`

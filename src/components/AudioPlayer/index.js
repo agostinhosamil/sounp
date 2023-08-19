@@ -144,7 +144,10 @@ export const AudioPlayer = (music) => {
     <div>
       <div ref={containerRef}></div>
       <PlayerButtonsWrapper>
-        <PlayButton ref={playButtonRef} onClick={handlePlayPause}>
+        <PlayButton 
+          playing={playing}
+          ref={playButtonRef} 
+          onClick={handlePlayPause}>
           <PlayButtonIcon />
         </PlayButton>
         <DeezerPlayButton onClick={handleOpenMusicOnDeezer}>

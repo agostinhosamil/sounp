@@ -78,7 +78,7 @@ export default function Music ({ album, artist, albumTrackList, ...music }) {
 
           {music.preview && <AudioPlayer artist={artist} album={album} {...music} />}
 
-          {music.lyrics instanceof Array && (
+          {music.lyrics instanceof Array && music.lyrics.length >= 1 && (
             <LyricContainer>
               <LyricTitle>Lyrics</LyricTitle>
               {music.lyrics.map ((lyricParagraphGroup, lyricParagraphGroupIndex) => (

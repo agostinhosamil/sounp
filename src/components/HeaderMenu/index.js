@@ -3,6 +3,7 @@ import * as Icon from 'react-icons/sl'
 
 import { HeaderSearchBoxResultPreview } from './HeaderSearchBoxResultPreview'
 import { FixedHeaderMenuElement } from './FixedHeaderMenuElement'
+import { HeaderMenuItemWrapper } from './HeaderMenuItemWrapper'
 import { HeaderMenuButton } from './HeaderMenuButton'
 
 import { elementOffsetY } from '@utils/helper'
@@ -11,6 +12,7 @@ import {
   HeaderMenuContainer,
   HeaderLogoContainer,
   HeaderSearchBoxContainer,
+  HeaderSearchBoxWrapperElement,
   HeaderMenuWrapper,
   IconContainer,
   HeaderSearchBox,
@@ -42,8 +44,10 @@ export function HeaderMenu ({ children }) {
 
     const pageResizeHandler = () => {
       if (window.innerWidth > 800) {
+        console.log('Posibilidade A')
         hideMenuItems && setHideMenuItems(false)
       } else {
+        console.log('Posibilidade B')
         !hideMenuItems && setHideMenuItems(true)
       }
     }
@@ -85,6 +89,20 @@ export function HeaderMenu ({ children }) {
     return Boolean(query && /\S/.test(query))
   }
 
+  function headerMenuChildrenMap (child) {
+    if (child.type == HeaderMenuItemWrapper) {
+      return { 
+        ...child, 
+        props: { 
+          ...child.props, 
+          wrap: !hideMenuItems 
+        } 
+      }
+    }
+
+    return child
+  }
+
   const HeaderMenuContainerWrapper = fixed ? FixedHeaderMenuElement : Fragment
   const HeaderMenuWrapperElement = hideMenuItems ? HeaderMenuButton : HeaderMenuWrapper
 
@@ -104,27 +122,29 @@ export function HeaderMenu ({ children }) {
             </a>
           </Link>
         </HeaderLogoContainer>
-        <HeaderSearchBoxContainer ref={headerSearchBoxContainerRef}>
-          <IconContainer>
-            <Icon.SlMagnifier />
-          </IconContainer>
-          <HeaderSearchBox>
-            <HeaderSearchBoxInput
-              onChange={searchBoxInputChangeHandler}
-              onBlur={searchBoxInputBlurHandler}
-              onFocus={searchBoxInputFocusHandler}
-              defaultValue={query}
-              ref={inputRef}
-              />
-          </HeaderSearchBox>
-          
-          {validQuery(query) && showPreview && (
-            <HeaderSearchBoxResultPreview query={query} />
-          )}
+        <HeaderSearchBoxWrapperElement>
+          <HeaderSearchBoxContainer ref={headerSearchBoxContainerRef}>
+            <IconContainer>
+              <Icon.SlMagnifier />
+            </IconContainer>
+            <HeaderSearchBox>
+              <HeaderSearchBoxInput
+                onChange={searchBoxInputChangeHandler}
+                onBlur={searchBoxInputBlurHandler}
+                onFocus={searchBoxInputFocusHandler}
+                defaultValue={query}
+                ref={inputRef}
+                />
+            </HeaderSearchBox>
+            
+            {validQuery(query) && showPreview && (
+              <HeaderSearchBoxResultPreview query={query} />
+            )}
 
-        </HeaderSearchBoxContainer>
+          </HeaderSearchBoxContainer>
+        </HeaderSearchBoxWrapperElement>
         <HeaderMenuWrapperElement>
-          {children}
+          {children.map (headerMenuChildrenMap)}
         </HeaderMenuWrapperElement>
       </HeaderMenuContainer>
     </HeaderMenuContainerWrapper>

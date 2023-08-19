@@ -26,6 +26,7 @@ export const PlayButton = styled.button.attrs({
   font-size: 30px;
   color: #ffffff;
   cursor: pointer;
+  padding: ${props => props.playing ? '0px' : '0px 0px 0px 8px'};
 
   &:hover {
     background-color: #c75154;

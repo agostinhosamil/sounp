@@ -10,7 +10,7 @@ import {
 export function HeaderMenuButton ({ children }) {
   const [showList, setShowList] = useState(false)
 
-  function  buttonClickHandler (event) {
+  function  buttonClickHandler () {
     setShowList(!showList)
   }
 

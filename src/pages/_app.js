@@ -11,44 +11,35 @@ import { Header } from '@components/Header'
 import { HeaderCover } from '@components/HeaderCover'
 import { AppWrapper } from '~/components/AppWrapper'
 import { HeaderMenu } from '@components/HeaderMenu'
+import { HeaderCoverImage } from '@components/HeaderCoverImage'
 import { HeaderMenuItem } from '@components/HeaderMenu/HeaderMenuItem'
+import { HeaderMenuItemWrapper } from '@components/HeaderMenu/HeaderMenuItemWrapper'
 
 import store from '~/config/state/store'
-
-import MoreMusicsImage from '../images/undraw_media_player_re.svg'
 
 Router.events.on('routeChangeStart', () => nProgress.start()); 
 Router.events.on('routeChangeComplete', () => nProgress.done()); 
 Router.events.on('routeChangeError', () => nProgress.done());
 
-function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <GlobalStyles />
       <Header>
         <HeaderMenu>
-          <HeaderMenuItem 
-            label="Home" 
-            icon="SlHome" 
-            />
-          <HeaderMenuItem 
-            label="About Me" 
-            icon="SlUser" 
-            href="/about"
-            />
-          <HeaderMenuItem 
-            label="Contact" 
-            href="/contact"
-            icon="SlPhone" 
-            />
-          <HeaderMenuItem 
-            label="Post" 
-            href="/post"
-            icon="SlPhone" 
-            />
+          <HeaderMenuItem label="Home" icon="SlHome" href="/" />
+          <HeaderMenuItem label="Me" icon="SlUser" href="/profile" />
+          <HeaderMenuItem label="Post" href="/post" icon="SlNote" />
+          <HeaderMenuItemWrapper label="Menu" icon="SlMenu">
+            <HeaderMenuItem label="Item 1" href="/post" icon="SlNote" />
+            <HeaderMenuItem label="Item 2" href="/post" icon="SlNote" />
+            <HeaderMenuItem label="Item 3" href="/post" icon="SlNote" />
+            <HeaderMenuItem label="Item 5" href="/post" icon="SlNote" />
+            <HeaderMenuItem label="Item dss 6" href="/post" icon="SlNote" />
+          </HeaderMenuItemWrapper>
         </HeaderMenu>
         <HeaderCover>
-          <MoreMusicsImage />
+          <HeaderCoverImage />
         </HeaderCover>
       </Header>
       <Fragment>
@@ -59,5 +50,3 @@ function App({ Component, pageProps }) {
     </Provider>
   )
 }
-
-export default App

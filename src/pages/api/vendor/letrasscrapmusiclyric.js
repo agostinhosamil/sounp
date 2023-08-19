@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { parse } from 'node-html-parser'
-import { remove as removeAccents } from 'remove-accents'
 import decode from 'html-entities-decode'
+import { remove as removeAccents } from 'remove-accents'
 
 import { getYoutubeMusicLinkByRefs } from '@utils/getYoutubeMusicLinkByRefs'
 
@@ -14,7 +14,7 @@ export default async function letrasScrapMusicLyric(request, response) {
   function parseData (data) {
     return removeAccents(data.split(/\s+/).join('-')).split(/[^a-zA-Z0-9_-]/).join('')
   }
-
+  
   const [artistName, musicTitle] = [parseData(artist), parseData(title)]
   const url = `https://www.letras.mus.br/${artistName}/${musicTitle}`
   const musicYoutubeLink = await getYoutubeMusicLinkByRefs({ 
@@ -23,6 +23,7 @@ export default async function letrasScrapMusicLyric(request, response) {
   })
 
   if (musicYoutubeLink) {
+    // console.log('musicYoutubeLink => ', musicYoutubeLink)
     const youtubeUrlObject = new URL(musicYoutubeLink)
     const musicYoutubeId = youtubeUrlObject.searchParams.get('v')
 
@@ -60,7 +61,10 @@ export default async function letrasScrapMusicLyric(request, response) {
       })
   } catch (err) {
     response
-      .status(500)
-      .json({ data: [] })
+      .status(200)
+      .json({ 
+        data: [],  
+        ...musicProps 
+      })
   }
 }

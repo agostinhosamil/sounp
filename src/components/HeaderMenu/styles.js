@@ -42,14 +42,13 @@ export const FixedHeaderMenu = styled.div`
   left: 0px;
   right: 0px;
   z-index: 20;
-  background-color: #f7a27b;
+  background-color: #ffffff;
   padding: 5px 0px 7px;
-  /* border-bottom: 1px solid #d59c5d; */
-  /* box-shadow: rgba(0,0,0,.22) -1px 4px 6px; */
+  box-shadow: rgb(0 0 0 / 5%) 0px 0px 20px;
 
-  div span.appName {
+  /* div span.appName {
     color: #ffffff;
-  }
+  } */
 `
 
 export const HeaderLogoContainer = styled.div`
@@ -66,9 +65,16 @@ export const HeaderLogoContainer = styled.div`
   }
 `
 
+export const HeaderSearchBoxWrapperElement = styled.div`
+  display: block;
+  position: relative;
+  width: 100%;
+`
+
 export const HeaderSearchBoxContainer = styled.div`
   position: relative;
   width: 100%;
+  max-width: 470px;
   background-color: #ffffff;
   border: 1px solid #cdcdcd;
   border-radius: 4px;
@@ -126,6 +132,8 @@ export const HeaderMenuItemLink = styled.li`
     span {
       display: inline-block;
       padding-left: 5px;
+      vertical-align: top;
+      margin: -3px 0px 0px;
     }
 
     &:hover {
@@ -234,10 +242,12 @@ export const MobileHeaderMenuWrapper = styled.div`
   background-color: #ffffff;
   height: 100%;
   width: 100%;
-  max-width: 360px;
+  max-width: 414px;
   z-index: 15;
-  border-left: 1px solid #c9c9c9;
+  /* border-left: 1px solid #c9c9c9; */
   animation: .7s ${bounceFromRight} ease-in-out;
+  display: flex;
+  flex-direction: column;
 
   li {
     width: 100%;
@@ -250,19 +260,66 @@ export const MobileHeaderMenuWrapper = styled.div`
       padding: 30px 16px 32px;
       font-size: 26px;
 
+      @media (min-width: 801px) {
+        font-size: 20px;
+        padding: 12px 16px 10px;
+      }
+
       span {
         padding-left: 9px;
       }
 
       &:hover {
         background-color: #ebebeb;
+        color: #303030;
       }
 
       &:active {
         background-color: #e0e0e0;
+        color: #303030;
       } 
     }
   }
+`
+
+export const MobileHeaderMenuFooter = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 0px 16px;
+  border-top: 1px solid #ececec;
+`
+
+export const MobileHeaderMenuFooterLine = styled.div`
+  width: 100%;
+  height: auto;
+  margin: 15px 0px;
+
+  a {
+    font-weight: 600;
+    color: #808080;
+    margin: 0px 5px 5px 0px;
+  }
+
+  span {
+    color: #000000;
+    text-transform: uppercase;
+  }
+
+  * {
+    white-space: normal;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+`
+
+export const MobileHeaderMenuHeader = styled.div`
+  width: 100%;
+  height: auto;
+`
+
+export const MobileHeaderMenuBody = styled.div`
+  width: 100%;
+  height: 100%;
 `
 
 export const MobileHeaderMenuBackground = styled.div`
