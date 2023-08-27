@@ -17,7 +17,7 @@ export const elementOffsetY = (element) => {
   }
 
   const offset = {
-    y: element.clientTop
+    y: element.offsetTop
   }
 
   if (element.parentNode instanceof HTMLElement) {
@@ -26,6 +26,24 @@ export const elementOffsetY = (element) => {
     return offset.y + parentElementOffsetY
   } else {
     return offset.y
+  }
+}
+
+export const elementOffsetX = (element) => {
+  if (!(typeof HTMLElement === 'function' && element instanceof HTMLElement)) {
+    return 0;
+  }
+
+  const offset = {
+    x: element.offsetLeft
+  }
+
+  if (element.parentNode instanceof HTMLElement) {
+    const parentElementOffsetX = elementOffsetX(element.parentNode)
+
+    return offset.x + parentElementOffsetX
+  } else {
+    return offset.x
   }
 }
 

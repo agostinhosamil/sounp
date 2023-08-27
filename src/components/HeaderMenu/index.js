@@ -44,10 +44,8 @@ export function HeaderMenu ({ children }) {
 
     const pageResizeHandler = () => {
       if (window.innerWidth > 800) {
-        console.log('Posibilidade A')
         hideMenuItems && setHideMenuItems(false)
       } else {
-        console.log('Posibilidade B')
         !hideMenuItems && setHideMenuItems(true)
       }
     }

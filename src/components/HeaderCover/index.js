@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 
-import { Container, UndrawOffRoadReLemeContainer } from './styles'
+import { Container, UndrawOffRoadReLemeContainer, HeaderCoverImageContainer } from './styles'
 
 import UndrawOffRoadReLeme from '../../images/undraw_off_road_re_leme.svg'
 
@@ -33,9 +33,9 @@ export function HeaderCover ({ children }) {
 
   return (
     <Container>
-      <div>
+      <HeaderCoverImageContainer>
         {children}
-      </div>
+      </HeaderCoverImageContainer>
       <div>
         <UndrawOffRoadReLemeContainer>
           <UndrawOffRoadReLeme className="offRoadLeme" />

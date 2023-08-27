@@ -85,3 +85,11 @@ export const UndrawOffRoadReLemeContainer = styled.div`
     }
   }
 `
+
+export const HeaderCoverImageContainer = styled.div`
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 20px;
+`

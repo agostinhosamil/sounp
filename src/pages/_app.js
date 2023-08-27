@@ -1,5 +1,7 @@
 import 'react-loading-skeleton/dist/skeleton.css'
 import 'nprogress/nprogress.css'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 import { Fragment } from 'react'
 import { Provider } from 'react-redux'
@@ -29,7 +31,7 @@ export default function App({ Component, pageProps }) {
         <HeaderMenu>
           <HeaderMenuItem label="Home" icon="SlHome" href="/" />
           <HeaderMenuItem label="Me" icon="SlUser" href="/profile" />
-          <HeaderMenuItem label="Post" href="/post" icon="SlNote" />
+          <HeaderMenuItem label="Post" icon="SlNote" href="/post" />
           <HeaderMenuItemWrapper label="Menu" icon="SlMenu">
             <HeaderMenuItem label="Item 1" href="/post" icon="SlNote" />
             <HeaderMenuItem label="Item 2" href="/post" icon="SlNote" />

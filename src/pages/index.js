@@ -181,7 +181,11 @@ export const getServerSideProps = async (context) => {
     console.log(err)
 
     return {
-      props: {}
+      props: {
+        fallback: {
+          '/api/search': []
+        }
+      }
     }
   }
 }
