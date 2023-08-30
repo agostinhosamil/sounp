@@ -53,7 +53,7 @@ function Home() {
     }
 
     setFeedContentLoading(false)
-  }  
+  }
 
   // useEffect(() => {
   //   setFeedLineContentLength(getFeedLineContentLength())

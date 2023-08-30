@@ -3,6 +3,7 @@ import { UserProfileAlbumsListWrapper } from './UserProfileAlbumsListWrapper'
 import { UserProfileAction } from './UserProfileAction'
 import { UserProfileAlbum } from './UserProfileAlbum'
 
+
 import {
   UserProfileContainer,
   UserProfileAsideContent,
@@ -51,6 +52,15 @@ export function UserProfile () {
               <UserProfileActionDropDownItem label="Settings 4" icon="SlPeople" />
               <UserProfileActionDropDownItem label="Settings 5" icon="SlPeople">
                 <UserProfileActionDropDownItem label="Ir para a página incial" icon="SlHome" />
+                <UserProfileActionDropDownItem label="Ir para a página de videos" icon="SlHome" />
+                <UserProfileActionDropDownItem label="Ir para a página de fotos" icon="SlHome" />
+                <UserProfileActionDropDownItem label="Ir para a página de stories" icon="SlHome" />
+                <UserProfileActionDropDownItem label="Ver mais páginas" icon="SlHome">
+                  <UserProfileActionDropDownItem label="Ir para a página incial" icon="SlHome" />
+                  <UserProfileActionDropDownItem label="Ir para a página incial 1" icon="SlHome" />
+                  <UserProfileActionDropDownItem label="Ir para a página incial 2" icon="SlHome" />
+                  <UserProfileActionDropDownItem label="Ir para a página incial 3" icon="SlHome" />
+                </UserProfileActionDropDownItem>
               </UserProfileActionDropDownItem>
               <UserProfileActionDropDownItem label="Settings 6" icon="SlPeople" />
             </UserProfileActionDropDownItem>
@@ -65,7 +75,7 @@ export function UserProfile () {
               <UserProfileActionDropDownItem label="Settings options 8" icon="SlPeople" />
               <UserProfileActionDropDownItem label="Settings options 9" icon="SlPeople" />
             </UserProfileActionDropDownItem>
-          </UserProfileAction>
+          </UserProfileAction>          
         </UserProfileActionsWrapper>
         <UserProfileAlbumsWrapper>
           <h2>Albums from <br /> Agostinho Sambo Lopes</h2>
@@ -90,6 +100,7 @@ export function UserProfile () {
             </UserProfileAlbumsListWrapper>
           </UserProfileAlbumsList>
         </UserProfileAlbumsWrapper>
+
       </UserProfileMainContent>
       <UserProfileAsideContent>
         Aside

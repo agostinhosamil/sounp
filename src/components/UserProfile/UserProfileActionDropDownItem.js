@@ -32,15 +32,8 @@ export function UserProfileActionDropDownItem ({ icon, label, href, ...props }) 
           onClick: (event) => {
             event.preventDefault()
 
-            if (props.onClick && typeof props.onClick === 'function') {
-              const clickEventProps = {
-                ...event,
-                reactElement: {
-                  children
-                }
-              }
-              
-              props.onClick.apply(event.target, [clickEventProps])
+            if (props.onClick && typeof props.onClick === 'function') {              
+              props.onClick.apply(event.target, [event])
             }
           }
         }
