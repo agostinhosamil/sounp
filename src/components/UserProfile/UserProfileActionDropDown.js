@@ -93,11 +93,11 @@ export function UserProfileActionDropDown ({ children, ...props }) {
 
     let childChildrenList = child.props.children
 
-    if (childChildrenList && !(childChildrenList instanceof Array)) {
-      childChildrenList = [ childChildrenList ]
-    }
-
     if (childChildrenList) {
+      if (!(childChildrenList instanceof Array)) {
+        childChildrenList = [ childChildrenList ]
+      }
+
       childChildrenList = childChildrenList.map(userProfileActionDropDownChildrenMap)
     }
   
